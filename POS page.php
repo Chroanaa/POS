@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device class = "productImage"-width, initi class = "productImage"al-scale=1.0">
+    <meta name="viewport" content="width=device"  al-scale=1.0">
     <title>POS</title>
     <link rel="stylesheet" 
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
@@ -23,7 +23,7 @@
                 <div class="searchResultContainer">
                     <div class="row">
                     <!---- ADD ORDER TO CHECKOUT ---->
-                    <div class="col-4 productColContainer" data-pid="32">
+                    <div class="col-4 productColContainer" data-pid="31">
                         <div class="productResultContainer">
                          <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
@@ -65,7 +65,7 @@
                         
                     </div>
                        
-                    <div class="col-4 productColContainer" data-pid="32">
+                    <div class="col-4 productColContainer" data-pid="33" name="Hersheys">
                         <div class="productResultContainer">
                          <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
@@ -86,7 +86,7 @@
                         
                     </div>
                        
-                    <div class="col-4 productColContainer" data-pid="32">
+                    <div class="col-4 productColContainer" data-pid="34">
                         <div class="productResultContainer">
                          <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
@@ -107,7 +107,7 @@
                         
                     </div>
                        
-                    <div class="col-4 productColContainer" data-pid="32">
+                    <div class="col-4 productColContainer" data-pid="35">
                         <div class="productResultContainer">
                          <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
@@ -128,7 +128,7 @@
                         
                     </div>
                        
-                    <div class="col-4 productColContainer" data-pid="32">
+                    <div class="col-4 productColContainer" data-pid="36">
                         <div class="productResultContainer">
                          <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
@@ -149,7 +149,7 @@
                         
                     </div>
                        
-                    <div class="col-4 productColContainer" data-pid="32">
+                    <div class="col-4 productColContainer" data-pid="37">
                         <div class="productResultContainer">
                          <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
@@ -170,7 +170,7 @@
                         
                     </div>
                        
-                    <div class="col-4 productColContainer" data-pid="32">
+                    <div class="col-4 productColContainer" data-pid="38">
                         <div class="productResultContainer">
                          <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
@@ -191,7 +191,7 @@
                         
                     </div>
                        
-                    <div class="col-4 productColContainer" data-pid="32">
+                    <div class="col-4 productColContainer" data-pid="39">
                         <div class="productResultContainer">
                          <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
@@ -217,7 +217,7 @@
                       <!---- Products column-row ---->
 
             </div>
-            <div class="col-4 productColContainer" data-pid="32"posOrderContainer">
+            <div class="col-4 posOrderContainer" data-pid="40">
                 <div class="pos_header" >
                   <div class="setting alignRight" style="text-align: right !important;">
                     <a href="javascript:void(0);"><i class="fa fa-gear"></i></a>
@@ -227,68 +227,12 @@
                 </div>
                 <div class="pos_items_container">
                     <div class="pos_items">
-                     <table class = "table" id="pos_items_tbl">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>PRODUCT</th>
-                                <th>PRICE</th>
-                                <th>AMOUNT</th>
-                                <th>TOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody >
-                            <tr>
-                                <td>1</td>
-                                <td>Milo</td>
-                                <td>$32</td>
-                                <td>5</td>
-                                <td>$160</td>
-                                <td>
-                                    <a href="javascript:void(0)" class="pos_items_btn"><i class="fa fa-edit"></i></a>
-                                     <a href="javascript:void(0)" class="pos_items_btn"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                             <tr>
-                                <td>2</td>
-                                <td>Milo</td>
-                                <td>$32</td>
-                                <td>5</td>
-                                <td>$160</td>
-                                <td>
-                                    <a href="javascript:void(0)" class="pos_items_btn"><i class="fa fa-edit"></i></a>
-                                     <a href="javascript:void(0)" class="pos_items_btn"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                             <tr>
-                                <td>3</td>
-                                <td>Milo</td>
-                                <td>$32</td>
-                                <td>5</td>
-                                <td>$160</td>
-                                <td>
-                                    <a href="javascript:void(0)" class="pos_items_btn"><i class="fa fa-edit"></i></a>
-                                     <a href="javascript:void(0)" class="pos_items_btn"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                             <tr>
-                                <td>4</td>
-                                <td>Milo</td>
-                                <td>$32</td>
-                                <td>5</td>
-                                <td>$160</td>
-                                <td>
-                                    <a href="javascript:void(0)" class="pos_items_btn"><i class="fa fa-edit"></i></a>
-                                     <a href="javascript:void(0)" class="pos_items_btn"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                     <p class="noData">NO ITEMS</p>
                     </div>
                   <div class="item_total_container">
                     <p class="item_total">
                         <span class="item_total--label">TOTAL</span>
-                        <span class="item_total--value">$500</span>
+                        <span class="item_total--value">$0.00</span>
                     </p>
                 </div>
                 <div class = "checkoutBtnContainer">

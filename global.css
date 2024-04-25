@@ -2,6 +2,11 @@ body {
   margin: 0%;
   padding: 0%;
 }
+.btn-group {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+}
 /* Container CSS */
 .searchInputContainer {
   margin-top: 10px;

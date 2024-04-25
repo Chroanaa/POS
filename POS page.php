@@ -25,17 +25,17 @@
                     <!---- ADD ORDER TO CHECKOUT ---->
                     <div class="col-4 productColContainer" data-pid="31">
                         <div class="productResultContainer">
-                         <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
+                         <img src="images/hershey.png" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       Toblerone
+                                       Hershey
                                     </p>
                                 </div>
                                 <div class="col-md-4">
                                     <p class="productPrice">
-                                        1000
+                                        30.0
                                     </p>
                                 </div>
                             </div>
@@ -46,17 +46,17 @@
                        
                     <div class="col-4 productColContainer" data-pid="32">
                         <div class="productResultContainer">
-                         <img src="images/gabe.jpg" width="100%" class = "productImage" alt="" >
+                         <img src="images/toblerone.jpg" width="100%" class = "productImage" alt="" >
                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       Chocolate
+                                       Toblerone
                                     </p>
                                 </div>
                                 <div class="col-md-4">
                                     <p class="productPrice">
-                                        2000
+                                      46.52
                                     </p>
                                 </div>
                             </div>
@@ -67,17 +67,17 @@
                        
                     <div class="col-4 productColContainer" data-pid="33" name="Hersheys">
                         <div class="productResultContainer">
-                         <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
+                         <img src="images/M&M.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       Hersheys
+                                       M&M
                                     </p>
                                 </div>
                                 <div class="col-md-4">
                                     <p class="productPrice">
-                                        3000
+                                       25.0
                                     </p>
                                 </div>
                             </div>
@@ -88,17 +88,17 @@
                        
                     <div class="col-4 productColContainer" data-pid="34">
                         <div class="productResultContainer">
-                         <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
+                         <img src="images/cadbury.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       Kisses (Wala ka non Trias)
+                                      Cadbury
                                     </p>
                                 </div>
                                 <div class="col-md-4">
                                     <p class="productPrice">
-                                        priceless
+                                        30.0
                                     </p>
                                 </div>
                             </div>
@@ -109,17 +109,17 @@
                        
                     <div class="col-4 productColContainer" data-pid="35">
                         <div class="productResultContainer">
-                         <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
+                         <img src="images/dairymilk.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       Choconut
+                                       Dairy Milk
                                     </p>
                                 </div>
                                 <div class="col-md-4">
                                     <p class="productPrice">
-                                        1000
+                                        25.0
                                     </p>
                                 </div>
                             </div>
@@ -130,17 +130,17 @@
                        
                     <div class="col-4 productColContainer" data-pid="36">
                         <div class="productResultContainer">
-                         <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
+                         <img src="images/snickers.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       Puto
+                                       Snickers
                                     </p>
                                 </div>
                                 <div class="col-md-4">
                                     <p class="productPrice">
-                                        1000
+                                        50.0
                                     </p>
                                 </div>
                             </div>
@@ -151,12 +151,12 @@
                        
                     <div class="col-4 productColContainer" data-pid="37">
                         <div class="productResultContainer">
-                         <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
+                         <img src="images/kitkat.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       Pancit canton
+                                        Kitkat                                    
                                     </p>
                                 </div>
                                 <div class="col-md-4">
@@ -172,17 +172,17 @@
                        
                     <div class="col-4 productColContainer" data-pid="38">
                         <div class="productResultContainer">
-                         <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
+                         <img src="images/mars.jpg" width="100%" class= "productImage" alt="">
                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       Lucky me
+                                       Mars
                                     </p>
                                 </div>
                                 <div class="col-md-4">
                                     <p class="productPrice">
-                                        500
+                                       30.0
                                     </p>
                                 </div>
                             </div>
@@ -193,17 +193,17 @@
                        
                     <div class="col-4 productColContainer" data-pid="39">
                         <div class="productResultContainer">
-                         <img src="images/gabe.jpg" width="100%" class = "productImage" alt="">
+                         <img src="images/ferrero.jpg" width="100%" class = "productImage" alt="">
                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                        Skyflakes
+                                       Ferrero Rocher
                                     </p>
                                 </div>
                                 <div class="col-md-4">
                                     <p class="productPrice">
-                                        200
+                                        50.0
                                     </p>
                                 </div>
                             </div>
@@ -217,7 +217,7 @@
                       <!---- Products column-row ---->
 
             </div>
-            <div class="col-4 posOrderContainer" data-pid="40">
+            <div class="col-4 posOrderContainer" >
                 <div class="pos_header" >
                   <div class="setting alignRight" style="text-align: right !important;">
                     <a href="javascript:void(0);"><i class="fa fa-gear"></i></a>

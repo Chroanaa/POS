@@ -93,6 +93,10 @@ const updateOrderTable = () => {
       <td>$ ${orderItem["price"]}</td>
       <td>${orderItem["quantity"]}</td>
       <td>${Number(orderItem["amount"]).toFixed(2)}</td>
+      <div class = "btn-group">
+       <td><button class = "btn btn-danger btn-sm" onclick = "deleteOrder(${pid})"><i class = "fa fa-trash"> </i></button></td>
+      <td><button class = "btn btn-success btn-sm" onclick = "editOrder(${pid})"><i class = "fa fa-edit"> </i></button></td>
+      </div>
       </tr> 
       `;
       rowNum++;
@@ -136,6 +140,32 @@ const addToOrder = (productInfo, pid, quantity) => {
     //Update the order Table
     updateOrderTable();
   }
+};
+const deleteOrder = (pid) => {
+  let productInfo = products[pid];
+  //delete the order
+  BootstrapDialog.confirm({
+    title: "Delete Order",
+    message: `Are you sure you want to delete this ${productInfo["name"]} order?`,
+    type: BootstrapDialog.TYPE_DANGER,
+    callback: (deleteOrder) => {
+      if (deleteOrder) {
+        //delete the order
+        const curOrder = orders[pid];
+        const curQuantity = curOrder["quantity"];
+        const curStock = products[pid]["stock"];
+        products[pid]["stock"] += curQuantity;
+        delete orders[pid];
+        //update the order table
+        updateOrderTable();
+      }
+    },
+  });
+};
+
+const editOrder = (pid) => {
+  //edit order
+  editOrderDialog(pid);
 };
 const productContainer = document.querySelector(".row");
 const getDate = setInterval(() => {

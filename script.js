@@ -58,9 +58,10 @@ const updateOrderTable = () => {
       rowNum += 1;
       noDataText = table.replace("___ROWS___", rows);
       totalAmount += parseFloat(orderItem["amount"]);
-      document.querySelector(".item_total--value").innerHTML =
-        totalAmount.toFixed(2);
+      console.log(totalAmount.toFixed(2) + "total");
     }
+    document.querySelector(".item_total--value").innerHTML =
+      totalAmount.toFixed(2);
   }
   //append to order list table
   ordersContainer.innerHTML = noDataText;
@@ -81,28 +82,17 @@ document.addEventListener("click", (e) => {
     orders[pid]["amount"] -= productInfo["price"];
     console.log(products[pid]["stock"]);
     //if the quantity is 0, we delete it from the order list
-    if (orderQty <= 0 || orders[pid]["quantity"] <= 0) {
-      BootstrapDialog.confirm({
-        title: "Delete Order",
-        message: `Are you sure you want to delete this <strong style ="color:red; font-size:20px">${productInfo["name"]}</strong> order?`,
-        type: BootstrapDialog.TYPE_DANGER,
-        callback: (deleteOrder) => {
-          if (deleteOrder) {
-            //delete the order
-            const curOrder = orders[pid];
-            const curQuantity = curOrder["quantity"];
-            const curStock = products[pid]["stock"];
-            products[pid]["stock"] += curQuantity;
-            delete orders[pid];
-            //update the order table
-            updateOrderTable();
-          }
-        },
-      });
-    }
     updateOrderTable();
-    console.log(pid);
+    if (
+      orderQty === 0 ||
+      orders[pid]["quantity"] === 0 ||
+      orders[pid]["quantity"] < 0
+    ) {
+      delete orders[pid];
+      updateOrderTable();
+    }
   }
+
   if (targetElClasslist.contains("quantityBtn_plus")) {
     //increase quantity
     if (!products[pid]["stock"] <= 0) {

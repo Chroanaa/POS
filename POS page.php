@@ -1,3 +1,7 @@
+<?php
+include ('products.php');
+$products = getProducts();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,26 +20,29 @@
     <div class="container-fluid">
       <!---- Products column-row ---->
         <div class="row">
-            <div class="col-8" >
+        <div class="col-8" >
                 <div class="searchInputContainer">
-                    <input type="text" class="searchInput" placeholder="Search Product" >
+                <input type="text" class="searchInput" placeholder="Search Product" >
                 </div>
-                <div class="searchResultContainer">
-                    <div class="row">
-                    <!---- ADD ORDER TO CHECKOUT ---->
-                    <div class="col-4 productColContainer" data-pid="31">
+          
+           <div class="searchResultContainer">
+               <div class="row">
+                   <!---- ADD ORDER TO CHECKOUT ---->
+                   <?php 
+           foreach($products as $product){ ?>
+                   <div class="col-4 productColContainer" data-pid="<?= $product['id']?>" >
                         <div class="productResultContainer">
-                         <img src="images/hershey.png" width="100%" class = "productImage" alt="">
-                        <div class="productInfoContainer">
+                         <img src="<?= $product['img']?>" width="100%"  class = "productImage" alt="">
+                         <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       Hershey
+                                       <?= $product['product_name']?>
                                     </p>
                                 </div>
                                 <div class="col-md-4">
                                     <p class="productPrice">
-                                        30.0
+                                        $<?= $product['price']?>
                                     </p>
                                 </div>
                             </div>
@@ -43,179 +50,11 @@
                         </div> 
                         
                     </div>
-                       
-                    <div class="col-4 productColContainer" data-pid="32">
-                        <div class="productResultContainer">
-                         <img src="images/toblerone.jpg" width="100%" class = "productImage" alt="" >
-                        <div class="productInfoContainer">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="productName">
-                                       Toblerone
-                                    </p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="productPrice">
-                                      46.52
-                                    </p>
-                                </div>
-                            </div>
-                         </div>
-                        </div> 
-                        
-                    </div>
-                       
-                    <div class="col-4 productColContainer" data-pid="33" name="Hersheys">
-                        <div class="productResultContainer">
-                         <img src="images/M&M.jpg" width="100%" class = "productImage" alt="">
-                        <div class="productInfoContainer">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="productName">
-                                       M&M
-                                    </p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="productPrice">
-                                       25.0
-                                    </p>
-                                </div>
-                            </div>
-                         </div>
-                        </div> 
-                        
-                    </div>
-                       
-                    <div class="col-4 productColContainer" data-pid="34">
-                        <div class="productResultContainer">
-                         <img src="images/cadbury.jpg" width="100%" class = "productImage" alt="">
-                        <div class="productInfoContainer">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="productName">
-                                      Cadbury
-                                    </p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="productPrice">
-                                        30.0
-                                    </p>
-                                </div>
-                            </div>
-                         </div>
-                        </div> 
-                        
-                    </div>
-                       
-                    <div class="col-4 productColContainer" data-pid="35">
-                        <div class="productResultContainer">
-                         <img src="images/dairymilk.jpg" width="100%" class = "productImage" alt="">
-                        <div class="productInfoContainer">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="productName">
-                                       Dairy Milk
-                                    </p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="productPrice">
-                                        25.0
-                                    </p>
-                                </div>
-                            </div>
-                         </div>
-                        </div> 
-                        
-                    </div>
-                       
-                    <div class="col-4 productColContainer" data-pid="36">
-                        <div class="productResultContainer">
-                         <img src="images/snickers.jpg" width="100%" class = "productImage" alt="">
-                        <div class="productInfoContainer">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="productName">
-                                       Snickers
-                                    </p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="productPrice">
-                                        50.0
-                                    </p>
-                                </div>
-                            </div>
-                         </div>
-                        </div> 
-                        
-                    </div>
-                       
-                    <div class="col-4 productColContainer" data-pid="37">
-                        <div class="productResultContainer">
-                         <img src="images/kitkat.jpg" width="100%" class = "productImage" alt="">
-                        <div class="productInfoContainer">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="productName">
-                                        Kitkat                                    
-                                    </p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="productPrice">
-                                        1400
-                                    </p>
-                                </div>
-                            </div>
-                         </div>
-                        </div> 
-                        
-                    </div>
-                       
-                    <div class="col-4 productColContainer" data-pid="38">
-                        <div class="productResultContainer">
-                         <img src="images/mars.jpg" width="100%" class= "productImage" alt="">
-                        <div class="productInfoContainer">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="productName">
-                                       Mars
-                                    </p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="productPrice">
-                                       30.0
-                                    </p>
-                                </div>
-                            </div>
-                         </div>
-                        </div> 
-                        
-                    </div>
-                       
-                    <div class="col-4 productColContainer" data-pid="39">
-                        <div class="productResultContainer">
-                         <img src="images/ferrero.jpg" width="100%" class = "productImage" alt="">
-                        <div class="productInfoContainer">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p class="productName">
-                                       Ferrero Rocher
-                                    </p>
-                                </div>
-                                <div class="col-md-4">
-                                    <p class="productPrice">
-                                        50.0
-                                    </p>
-                                </div>
-                            </div>
-                         </div>
-                        </div> 
-                        
-                    </div>
-                    </div>
-                    
+                    <?php } ?>
                 </div>
+            </div>
+        
                       <!---- Products column-row ---->
-
             </div>
             <div class="col-4 posOrderContainer" >
                 <div class="pos_header" >
@@ -243,6 +82,20 @@
         
     </div>
 </body>
+<script>
+    let productsJson = <?= json_encode($products)?>;
+   let products = {};
+    productsJson.forEach(product => {
+        products[product.id] = {
+            id: product.id,
+            product_name: product.product_name,
+            price: product.price,
+            img: product.img,
+            stock:product.stock
+        };
+    });
+   
+</script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

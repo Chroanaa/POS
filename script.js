@@ -1,60 +1,8 @@
 let textDate = document.querySelector(".timeAndDate");
 textDate.innerHTML = "Loading...";
-const orders = {};
-let totalAmount = 0.0;
-const products = {
-  31: {
-    name: "Hershey's",
-    price: 30.0,
-    stock: 10,
-  },
-  32: {
-    name: "Toblerone",
-    price: 46.52,
-    stock: 10,
-  },
-  33: {
-    name: "M&M",
-    price: 25.0,
-    stock: 20,
-  },
-  34: {
-    name: "Cadbury",
-    price: 30.0,
-    stock: 15,
-  },
-  35: {
-    name: "Dairy Milk",
-    price: 40.0,
-    stock: 5,
-  },
-  36: {
-    name: "Snickers",
-    price: 20.0,
-    stock: 25,
-  },
-  37: {
-    name: "Kitkat",
-    price: 30.0,
-    stock: 10,
-  },
-  38: {
-    name: "Mars",
-    price: 25.0,
-    stock: 30,
-  },
-  39: {
-    name: "Ferrero Rocher",
-    price: 50.0,
-    stock: 10,
-  },
-  40: {
-    name: "Milky Way",
-    price: 30.0,
-    stock: 20,
-  },
-};
+let orders = {};
 
+let totalAmount = 0.0;
 const dialogError = (message) => {
   BootstrapDialog.alert({
     type: BootstrapDialog.TYPE_DANGER,
@@ -75,7 +23,7 @@ const updateOrderTable = () => {
             <th>#</th>
             <th>PRODUCT</th>
             <th>PRICE</th>
-            <th>AMOUNT</th>
+            <th>QUANTITY</th>
             <th>TOTAL</th>
         </tr>
     </thead>
@@ -87,21 +35,29 @@ const updateOrderTable = () => {
     let rows = "";
     let rowNum = 1;
     for (const [pid, orderItem] of Object.entries(orders)) {
+      orderItem["amount"] =
+        parseFloat(orderItem["price"]) * orderItem["quantity"];
       rows += `<tr>
       <td>${rowNum}</td>
       <td>${orderItem["name"]}</td>
-      <td>$ ${orderItem["price"]}</td>
-      <td>${orderItem["quantity"]}</td>
-      <td>${Number(orderItem["amount"]).toFixed(2)}</td>
+      <td>$${orderItem["price"]}</td>
+      <td>${orderItem["quantity"]}
+      <a href = "javascript:void(0)" class = "quantityUpdateBtn quantityBtn_minus" data-id = "${pid}">
+      <i class = "fa fa-minus quantityUpdateBtn quantityBtn_minus" data-id = "${pid}"></i>
+      </a>
+      <a href = "javascript:void(0)" "class = "quantityUpdateBtn quantityBtn_plus" data-id = "${pid}">
+      <i class = "fa fa-plus quantityUpdateBtn quantityBtn_plus" data-id = "${pid}"></i>
+      </a>
+      </td>
+      <td>${parseFloat(orderItem["amount"]).toFixed(2)}</td>
       <div class = "btn-group">
-       <td><button class = "btn btn-danger btn-sm" onclick = "deleteOrder(${pid})"><i class = "fa fa-trash"> </i></button></td>
+      <td><button class = "btn btn-danger btn-sm" onclick = "deleteOrder(${pid})"><i class = "fa fa-trash"> </i></button></td>
       <td><button class = "btn btn-success btn-sm" onclick = "editOrder(${pid})"><i class = "fa fa-edit"> </i></button></td>
       </div>
-      </tr> 
-      `;
-      rowNum++;
+      </tr>`;
+      rowNum += 1;
       noDataText = table.replace("___ROWS___", rows);
-      totalAmount += orderItem["amount"];
+      totalAmount += parseFloat(orderItem["amount"]);
       document.querySelector(".item_total--value").innerHTML =
         totalAmount.toFixed(2);
     }
@@ -111,6 +67,57 @@ const updateOrderTable = () => {
 
   //update total amount
 };
+
+document.addEventListener("click", (e) => {
+  const targetEl = e.target;
+  let pid = targetEl.dataset.id;
+  let productInfo = orders[pid];
+  let targetElClasslist = targetEl.classList;
+  if (targetElClasslist.contains("quantityBtn_minus")) {
+    //decrease quantity
+    let orderQty = productInfo["quantity"];
+    products[pid]["stock"] += 1;
+    orders[pid]["quantity"] -= 1;
+    orders[pid]["amount"] -= productInfo["price"];
+    console.log(products[pid]["stock"]);
+    //if the quantity is 0, we delete it from the order list
+    if (orderQty <= 0 || orders[pid]["quantity"] <= 0) {
+      BootstrapDialog.confirm({
+        title: "Delete Order",
+        message: `Are you sure you want to delete this <strong style ="color:red; font-size:20px">${productInfo["name"]}</strong> order?`,
+        type: BootstrapDialog.TYPE_DANGER,
+        callback: (deleteOrder) => {
+          if (deleteOrder) {
+            //delete the order
+            const curOrder = orders[pid];
+            const curQuantity = curOrder["quantity"];
+            const curStock = products[pid]["stock"];
+            products[pid]["stock"] += curQuantity;
+            delete orders[pid];
+            //update the order table
+            updateOrderTable();
+          }
+        },
+      });
+    }
+    updateOrderTable();
+    console.log(pid);
+  }
+  if (targetElClasslist.contains("quantityBtn_plus")) {
+    //increase quantity
+    if (!products[pid]["stock"] <= 0) {
+      products[pid]["stock"] -= 1;
+      orders[pid]["quantity"] += 1;
+      orders[pid]["amount"] += productInfo["price"];
+      updateOrderTable();
+    }
+    //if the user tries to add more but, the stock is 0 it will throw this error
+    if (products[pid]["stock"] <= 0) {
+      dialogError("Product is out of stock");
+      return;
+    }
+  }
+});
 
 //add to order list
 const addToOrder = (productInfo, pid, quantity) => {
@@ -129,7 +136,7 @@ const addToOrder = (productInfo, pid, quantity) => {
   } else {
     //if not exist add the product to the order list
     orders[pid] = {
-      name: productInfo["name"],
+      name: productInfo["product_name"],
       price: productInfo["price"],
       quantity: quantity,
       amount: totalAmount,
@@ -146,7 +153,7 @@ const deleteOrder = (pid) => {
   //delete the order
   BootstrapDialog.confirm({
     title: "Delete Order",
-    message: `Are you sure you want to delete this ${productInfo["name"]} order?`,
+    message: `Are you sure you want to delete this <strong style ="color:red; font-size:20px">${productInfo["product_name"]}</strong>  order?`,
     type: BootstrapDialog.TYPE_DANGER,
     callback: (deleteOrder) => {
       if (deleteOrder) {
@@ -163,10 +170,6 @@ const deleteOrder = (pid) => {
   });
 };
 
-const editOrder = (pid) => {
-  //edit order
-  editOrderDialog(pid);
-};
 const productContainer = document.querySelector(".row");
 const getDate = setInterval(() => {
   let date = new Date();
@@ -199,7 +202,7 @@ productContainer.addEventListener("click", (e) => {
       return;
     }
 
-    const dialogForm = `<h6 class = "dialogProductName"> ${productInfo["name"]}<span class = "dialogProductPrice">$${productInfo["price"]}</span></h6>
+    const dialogForm = `<h6 class = "dialogProductName"> ${productInfo["product_name"]}<span class = "dialogProductPrice">$${productInfo["price"]}</span></h6>
     <input type="number" id="quantity" class ="form-control" placeholder="Enter Quantity" required min="1"/>
     `;
     BootstrapDialog.confirm({
@@ -223,6 +226,7 @@ productContainer.addEventListener("click", (e) => {
           }
           //ALL are CHECKED
           addToOrder(productInfo, pid, quantity);
+          console.log(orders);
         }
       },
     });

@@ -154,3 +154,19 @@ body {
   padding: 51px;
   color: #707070;
 }
+.quantityUpdateBtn {
+  text-decoration: none;
+  font-size: 20px;
+}
+.quantityBtn_plus {
+  text-decoration: none;
+  color: green;
+}
+
+.quantityBtn_minus {
+  text-decoration: none;
+  color: red;
+}
+.quantityUpdateBtn:hover {
+  text-decoration: none;
+}

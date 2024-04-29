@@ -136,6 +136,11 @@ body {
   color: #fff;
   transition: 0.5s;
 }
+.checkoutBtn:active {
+  text-decoration: none;
+  background-color: #ff5c85;
+  color: #fff;
+}
 .item_total_container {
   margin-top: 100px;
 }
@@ -169,4 +174,9 @@ body {
 }
 .quantityUpdateBtn:hover {
   text-decoration: none;
+}
+/* Checkout Modal CSS */
+.custom-dialog-style .modal-dialog {
+  max-width: 919px !important;
+  color: white;
 }

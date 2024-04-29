@@ -1,5 +1,5 @@
 <?php 
-include ('connection.php'); 
+include ('db/connection.php'); 
 function getProducts(){
     $conn = $GLOBALS['conn'];
 try{

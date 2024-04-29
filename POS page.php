@@ -1,5 +1,5 @@
 <?php
-include ('products.php');
+include ('utils/products.php');
 $products = getProducts();
 ?>
 <!DOCTYPE html>
@@ -14,30 +14,29 @@ $products = getProducts();
     crossorigin="anonymous">
     <link rel="stylesheet" href="global.css?v=<?= time()?>" type="text/css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/css/bootstrap-dialog.min.css">
 </head>
 <body>
     <div class="container-fluid">
-      <!---- Products column-row ---->
+        <!---- Products column-row ---->
         <div class="row">
-        <div class="col-8" >
+            <div class="col-8" >
                 <div class="searchInputContainer">
-                <input type="text" class="searchInput" placeholder="Search Product" >
+                    <input type="text" class="searchInput" placeholder="Search Product" >
                 </div>
-          
-           <div class="searchResultContainer">
-               <div class="row">
-                   <!---- ADD ORDER TO CHECKOUT ---->
-                   <?php 
+                
+                <div class="searchResultContainer">
+                    <div class="row">
+                        <!---- Product Result Container ---->
+                        <?php 
            foreach($products as $product){ ?>
                    <div class="col-4 productColContainer" data-pid="<?= $product['id']?>" >
-                        <div class="productResultContainer">
-                         <img src="<?= $product['img']?>" width="100%"  class = "productImage" alt="">
-                         <div class="productInfoContainer">
+                    <div class="productResultContainer">
+                        <img src="<?= $product['img']?>" width="100%"  class = "productImage" alt="">
+                        <div class="productInfoContainer">
                             <div class="row">
                                 <div class="col-md-8">
                                     <p class="productName">
-                                       <?= $product['product_name']?>
+                                        <?= $product['product_name']?>
                                     </p>
                                 </div>
                                 <div class="col-md-4">
@@ -46,45 +45,45 @@ $products = getProducts();
                                     </p>
                                 </div>
                             </div>
-                         </div>
-                        </div> 
-                        
-                    </div>
-                    <?php } ?>
+                        </div>
+                    </div> 
+                    
                 </div>
-            </div>
-        
-                      <!---- Products column-row ---->
-            </div>
-            <div class="col-4 posOrderContainer" >
-                <div class="pos_header" >
-                  <div class="setting alignRight" style="text-align: right !important;">
-                    <a href="javascript:void(0);"><i class="fa fa-gear"></i></a>
-                  </div>
-                  <p class="logo">IMS</p>
-                  <p class="timeAndDate"></p>
-                </div>
-                <div class="pos_items_container">
-                    <div class="pos_items">
-                     <p class="noData">NO ITEMS</p>
-                    </div>
-                  <div class="item_total_container">
-                    <p class="item_total">
-                        <span class="item_total--label">TOTAL</span>
-                        <span class="item_total--value">$0.00</span>
-                    </p>
-                </div>
-                <div class = "checkoutBtnContainer">
-                    <a href="javascript:void(0)" class="checkoutBtn">CHECKOUT</a>
-                </div>
+                <?php } ?>
             </div>
         </div>
         
+        <!----Add to cart Container ---->
     </div>
+    <div class="col-4 posOrderContainer" >
+        <div class="pos_header" >
+            <div class="setting alignRight" style="text-align: right !important;">
+                <a href="javascript:void(0);"><i class="fa fa-gear"></i></a>
+            </div>
+            <p class="logo">IMS</p>
+            <p class="timeAndDate"></p>
+        </div>
+        <div class="pos_items_container">
+            <div class="pos_items">
+                <p class="noData">NO ITEMS</p>
+            </div>
+            <div class="item_total_container">
+                <p class="item_total">
+                    <span class="item_total--label">TOTAL</span>
+                    <span class="item_total--value">$0.00</span>
+                </p>
+            </div>
+            <div class = "checkoutBtnContainer">
+                <a href="javascript:void(0)" class="checkoutBtn">CHECKOUT</a>
+            </div>
+        </div>
+    </div>
+    
+</div>
 </body>
 <script>
     let productsJson = <?= json_encode($products)?>;
-   let products = {};
+    let products = {};
     productsJson.forEach(product => {
         products[product.id] = {
             id: product.id,
@@ -94,11 +93,12 @@ $products = getProducts();
             stock:product.stock
         };
     });
-   
-</script>
+    
+    </script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/css/bootstrap-dialog.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/js/bootstrap-dialog.min.js"></script>
 

@@ -52,7 +52,6 @@ const updateOrderTable = () => {
       <td>${parseFloat(orderItem["amount"]).toFixed(2)}</td>
       <div class = "btn-group">
       <td><button class = "btn btn-danger btn-sm" onclick = "deleteOrder(${pid})"><i class = "fa fa-trash"> </i></button></td>
-      <td><button class = "btn btn-success btn-sm" onclick = "editOrder(${pid})"><i class = "fa fa-edit"> </i></button></td>
       </div>
       </tr>`;
       rowNum += 1;
@@ -105,6 +104,31 @@ document.addEventListener("click", (e) => {
     if (products[pid]["stock"] <= 0) {
       dialogError("Product is out of stock");
       return;
+    }
+  }
+  if (targetElClasslist.contains("checkoutBtn")) {
+    if (Object.keys(orders).length) {
+      var dialog = new BootstrapDialog({
+        title: "Checkout",
+        message: `Are you sure you want to checkout?`,
+        type: BootstrapDialog.TYPE_PRIMARY,
+        callback: function (checkout) {
+          if (checkout) {
+            //checkout
+            //send the orders to the server
+            console.log(orders);
+            //clear the orders
+            orders = {};
+            updateOrderTable();
+          }
+        },
+      });
+
+      dialog.realize();
+      dialog.getModalDialog().css("width", "100%");
+      dialog.getModalDialog().css("max-width", "919px");
+
+      dialog.open();
     }
   }
 });

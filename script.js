@@ -108,7 +108,11 @@ document.addEventListener("click", (e) => {
   }
   if (targetElClasslist.contains("checkoutBtn")) {
     if (Object.keys(orders).length) {
-      var dialog = new BootstrapDialog({
+      let dialog = BootstrapDialog.confirm({
+        confirm: true,
+        btnOKLabel: "Checkout",
+        btnOKClass: "btn-primary",
+        btnCancelLabel: "Cancel",
         title: "Checkout",
         message: `Are you sure you want to checkout?`,
         type: BootstrapDialog.TYPE_PRIMARY,
@@ -124,7 +128,6 @@ document.addEventListener("click", (e) => {
         },
       });
 
-      dialog.realize();
       dialog.getModalDialog().css("width", "100%");
       dialog.getModalDialog().css("max-width", "919px");
 

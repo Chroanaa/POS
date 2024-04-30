@@ -176,7 +176,3 @@ body {
   text-decoration: none;
 }
 /* Checkout Modal CSS */
-.custom-dialog-style .modal-dialog {
-  max-width: 919px !important;
-  color: white;
-}

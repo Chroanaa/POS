@@ -176,3 +176,16 @@ body {
   text-decoration: none;
 }
 /* Checkout Modal CSS */
+.checkoutTotalAmountContainer {
+  text-align: center;
+}
+.checkout_amt {
+  font-size: 36px;
+  font-weight: bold;
+  color: #ff4b4b;
+}
+.checkout_amt_title {
+  display: block;
+  font-size: 17px;
+  color: #7e7e7e;
+}

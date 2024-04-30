@@ -107,6 +107,15 @@ document.addEventListener("click", (e) => {
     }
   }
   if (targetElClasslist.contains("checkoutBtn")) {
+    let content = `<div class = "row">
+       <div class = "col-md-7"></div>
+       <div class = "col-md-5">
+         <div class = "checkoutTotalAmountContainer">
+            <span class = "checkout_amt">$32.00</span></br>
+            <span class = "checkout_amt_title">TOTAL AMOUNT</span>
+         </div>
+       </div>
+    </div>`;
     if (Object.keys(orders).length) {
       let dialog = BootstrapDialog.confirm({
         confirm: true,
@@ -114,7 +123,7 @@ document.addEventListener("click", (e) => {
         btnOKClass: "btn-primary",
         btnCancelLabel: "Cancel",
         title: "Checkout",
-        message: `Are you sure you want to checkout?`,
+        message: content,
         type: BootstrapDialog.TYPE_PRIMARY,
         callback: function (checkout) {
           if (checkout) {

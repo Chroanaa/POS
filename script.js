@@ -1,6 +1,7 @@
 let textDate = document.querySelector(".timeAndDate");
 textDate.innerHTML = "Loading...";
 let orders = {};
+let orderItemsOrderAmount = 0.0;
 
 let totalAmount = 0.0;
 const dialogError = (message) => {
@@ -107,43 +108,49 @@ document.addEventListener("click", (e) => {
     }
   }
   if (targetElClasslist.contains("checkoutBtn")) {
-    let content = `<div class = "row">
-       <div class = "col-md-7">
-       <div class = "row">
-       <div class = "col-md-2">#</div>
-       <div class = "col-md-4">PRODUCT</div>
-       <div class = "col-md-3">ORDERED</div>
-       <div class = "col-md-3">AMOUNT</div>
-       </div>
-       <div class = "row">
-       <div class = "col-md-2">1</div>
-       <div class = "col-md-4">Milo</div>
-       <div class = "col-md-3">3</div>
-       <div class = "col-md-3">$32.00</div>
-       </div>
-       <div class = "row">
-       <div class = "col-md-2">2</div>
-       <div class = "col-md-4">Nescafe</div>
-       <div class = "col-md-3">3</div>
-       <div class = "col-md-3">$32.00</div>
-       </div>
-       <div class = "row">
-       <div class = "col-md-2">3</div>
-       <div class = "col-md-4">Bearbrand</div>
-       <div class = "col-md-3">4</div>
-       <div class = "col-md-3">$32.00</div>
-       </div>
-       </div>
-       <div class = "col-md-5">
-         <div class = "checkoutTotalAmountContainer">
-            <span class = "checkout_amt">$32.00</span></br>
-            <span class = "checkout_amt_title">TOTAL AMOUNT</span>
-         </div>
-       </div>
-    </div>`;
     if (Object.keys(orders).length) {
+      let orderItemsHtml = "";
+      let orderNum = 1;
+      for (const [pid, orderItem] of Object.entries(orders)) {
+        orderItemsHtml += `<div class = "row checkoutTblContentContainer">
+          <div class = "col-md-2 checkoutTblContent">${orderNum}</div>
+          <div class = "col-md-4 checkoutTblContent">${orderItem["name"]}</div>
+          <div class = "col-md-3 checkoutTblContent">${orderItem["quantity"]}
+          </div>
+          <div class = "col-md-3 checkoutTblContent">$${orderItem[
+            "amount"
+          ].toFixed(2)}</div>
+          </div>`;
+        orderNum += 1;
+        orderItemsOrderAmount += parseFloat(orderItem["amount"]);
+      }
+      let content = `<div class = "row">
+        <div class = "col-md-7">
+        <p class = "checkoutTblContentContainer--title">Items</p>
+        <div class = "row">
+        <div class = "col-md-2 checkoutTblHeader">#</div>
+        <div class = "col-md-4 checkoutTblHeader">PRODUCT</div>
+        <div class = "col-md-3 checkoutTblHeader">ORDERED</div>
+        <div class = "col-md-3 checkoutTblHeader">AMOUNT</div>
+        </div>
+        ${orderItemsHtml}
+        </div>
+        <div class = "col-md-5">
+          <div class = "checkoutTotalAmountContainer">
+             <span class = "checkout_amt">${orderItemsOrderAmount}</span></br>
+             <span class = "checkout_amt_title">TOTAL AMOUNT</span>
+          </div>
+          <hr/>
+          <div class = "checkoutUserAmountContainer">
+          <input type = "number" class = "form-control" id="userAmount" placeholder = "Customer money" required/>
+          </div>
+          <div class = "userChangeContainer">
+           <span class = "userChange">Change: <span class = "userChangeAmount">$0.00</span></span>
+          </div>
+        </div>
+     </div>`;
       let dialog = BootstrapDialog.confirm({
-        confirm: true,
+        backdrop: "static",
         btnOKLabel: "Checkout",
         btnOKClass: "btn-primary",
         btnCancelLabel: "Cancel",
@@ -159,6 +166,17 @@ document.addEventListener("click", (e) => {
             orders = {};
             updateOrderTable();
           }
+          let userAmt = parseFloat(document.getElementById("userAmount").value);
+          if (userAmt < orderItemsOrderAmount) {
+            dialogError(
+              "<strong style = 'color:red'>Insufficient amount</strong>"
+            );
+            return;
+          }
+          if (isNaN(userAmt)) {
+            dialogError("Please enter a valid number");
+            return;
+          }
         },
       });
 
@@ -166,10 +184,29 @@ document.addEventListener("click", (e) => {
       dialog.getModalDialog().css("max-width", "919px");
 
       dialog.open();
+    } else {
+      dialogError("No items in cart");
     }
   }
 });
 
+document.addEventListener("keyup", (e) => {
+  let targetEl = e.target;
+  let targetElClasslist = targetEl.classList;
+  if (targetEl.id === "userAmount") {
+    let userAmt = parseFloat(targetEl.value);
+    let change = userAmt - orderItemsOrderAmount;
+    document.querySelector(".userChange .userChangeAmount").innerHTML = `$${
+      change ? change.toFixed(2) : "0.00"
+    }`;
+    let el = document.querySelector(".userChangeAmount");
+    if (change < 0) {
+      el.classList.add("text-danger");
+    } else {
+      el.classList.remove("text-danger");
+    }
+  }
+});
 //add to order list
 const addToOrder = (productInfo, pid, quantity) => {
   //add to order list table
@@ -203,6 +240,7 @@ const deleteOrder = (pid) => {
   let productInfo = products[pid];
   //delete the order
   BootstrapDialog.confirm({
+    backdrop: "static",
     title: "Delete Order",
     message: `Are you sure you want to delete this <strong style ="color:red; font-size:20px">${productInfo["product_name"]}</strong>  order?`,
     type: BootstrapDialog.TYPE_DANGER,
@@ -258,6 +296,7 @@ productContainer.addEventListener("click", (e) => {
     `;
     BootstrapDialog.confirm({
       title: "add to Cart",
+      backdrop: "static",
       message: dialogForm,
       callback: (addOrder) => {
         if (addOrder) {

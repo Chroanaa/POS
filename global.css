@@ -189,3 +189,32 @@ body {
   font-size: 17px;
   color: #7e7e7e;
 }
+.checkoutTblHeader {
+  font-size: 18px;
+  color: #b0b0b0;
+  font-weight: bold;
+  text-align: center;
+}
+.checkoutTblContent {
+  text-align: center;
+  font-size: 16px;
+  color: #652b39;
+}
+.checkoutTblContentContainer--title {
+  font-size: 26px;
+  color: #b5b5b5;
+}
+#userAmount {
+  height: 50px;
+  font-size: 21px;
+  text-align: right;
+}
+.userChangeContainer {
+  margin-top: -50px;
+  text-align: right;
+}
+.userChange {
+  font-size: 36px;
+  color: green;
+  font-weight: bold;
+}

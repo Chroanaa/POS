@@ -142,7 +142,7 @@ document.addEventListener("click", (e) => {
           </div>
           <hr/>
           <div class = "checkoutUserAmountContainer">
-          <input type = "number" class = "form-control" id="userAmount" placeholder = "Customer money" required/>
+          <input type = "number" class = "form-control" id="userAmount" placeholder = "Customer money" min=1 required/>
           </div>
           <div class = "userChangeContainer">
            <span class = "userChange">Change: <span class = "userChangeAmount">$0.00</span></span>
@@ -159,23 +159,23 @@ document.addEventListener("click", (e) => {
         type: BootstrapDialog.TYPE_PRIMARY,
         callback: function (checkout) {
           if (checkout) {
-            //checkout
-            //send the orders to the server
-            console.log(orders);
-            //clear the orders
-            orders = {};
-            updateOrderTable();
-          }
-          let userAmt = parseFloat(document.getElementById("userAmount").value);
-          if (userAmt < orderItemsOrderAmount) {
-            dialogError(
-              "<strong style = 'color:red'>Insufficient amount</strong>"
+            //check if the user amount is less than the total amount
+            let userAmt = parseFloat(
+              document.getElementById("userAmount").value
             );
-            return;
-          }
-          if (isNaN(userAmt)) {
-            dialogError("Please enter a valid number");
-            return;
+            if (userAmt < orderItemsOrderAmount) {
+              dialogError(
+                "<strong style = 'color:red'>Insufficient amount</strong>"
+              );
+              return a;
+            }
+            //check if the cashier has entered a valid number
+            if (isNaN(userAmt)) {
+              dialogError("Please enter a valid number");
+              return a;
+            }
+            //if all are checked
+            //save to database
           }
         },
       });
@@ -304,7 +304,7 @@ productContainer.addEventListener("click", (e) => {
           const quantity = parseInt(document.getElementById("quantity").value);
           if (isNaN(quantity)) {
             dialogError("Please enter a valid number");
-            return;
+            return a;
           }
           //check if quantity is more than current stock
           const curStock = productInfo["stock"];
@@ -312,7 +312,7 @@ productContainer.addEventListener("click", (e) => {
             dialogError(
               `The quantity was more than the current stock of <strong style = "color:red;font-size:20px;">(${curStock})</strong>`
             );
-            return;
+            return a;
           }
           //ALL are CHECKED
           addToOrder(productInfo, pid, quantity);

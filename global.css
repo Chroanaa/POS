@@ -218,3 +218,14 @@ body {
   color: green;
   font-weight: bold;
 }
+.checkoutCustomerDetails {
+  margin-top: -30px;
+}
+.checkoutCustomerTitle {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: -40px;
+}
+.detailsContainer {
+  margin-top: -30px;
+}

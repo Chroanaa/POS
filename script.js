@@ -2,8 +2,9 @@ let textDate = document.querySelector(".timeAndDate");
 textDate.innerHTML = "Loading...";
 let orders = {};
 let orderItemsOrderAmount = 0.0;
-
 let totalAmount = 0.0;
+let change = 0.0;
+let tenderedAmount = 0.0;
 const dialogError = (message) => {
   BootstrapDialog.alert({
     type: BootstrapDialog.TYPE_DANGER,
@@ -147,6 +148,21 @@ document.addEventListener("click", (e) => {
           <div class = "userChangeContainer">
            <span class = "userChange">Change: <span class = "userChangeAmount">$0.00</span></span>
           </div>
+        
+          <div class = "checkoutCustomerDetails">
+          <p class = "checkoutCustomerTitle">Customer Details</p>
+          <hr/>
+          <div class = "form-group detailsContainer">
+          <label for = "firstname">Firstname:</label>
+          <input type = "text" class = "form-control" placeholder = "First Name" id = "firstname" required/>
+          <label for = "lastName">Lastname:</label>
+          <input type = "text" class = "form-control" placeholder = "Last Name" id ="lastname" required/>
+          <label for = "phone">Phone:</label>
+          <input type = "text" class = "form-control" placeholder = "Customer Phone" id ="phone" required/>
+          <label for = "address">Address:</label>
+          <input type = "text" class = "form-control" placeholder = "Customer Address" id ="address" required/>
+          </div>
+          </div>
         </div>
      </div>`;
       let dialog = BootstrapDialog.confirm({
@@ -168,18 +184,44 @@ document.addEventListener("click", (e) => {
                 "<strong style = 'color:red'>Insufficient amount</strong>"
               );
               return a;
+            } else {
+              $.post(
+                "Model/products.php?action=checkout",
+                {
+                  data: orders,
+                  customer: {
+                    firstname: document.getElementById("firstname").value,
+                    lastname: document.getElementById("lastname").value,
+                    phone: document.getElementById("phone").value,
+                    address: document.getElementById("address").value,
+                  },
+                  total_Amount: orderItemsOrderAmount,
+                  change_amount: change,
+                  tendered_Amount: userAmt,
+                },
+
+                function (response) {
+                  let type = response.success
+                    ? BootstrapDialog.TYPE_SUCCESS
+                    : BootstrapDialog.TYPE_DANGER;
+
+                  BootstrapDialog.alert({
+                    type: type,
+                    title: response.success ? "Success" : "Error",
+                    message: response.message,
+                    callback: function (isOk) {
+                      if (response.success) {
+                        resetData(response);
+                      }
+                    },
+                  });
+                },
+                "json"
+              );
             }
-            //check if the cashier has entered a valid number
-            if (isNaN(userAmt)) {
-              dialogError("Please enter a valid number");
-              return a;
-            }
-            //if all are checked
-            //save to database
           }
         },
       });
-
       dialog.getModalDialog().css("width", "100%");
       dialog.getModalDialog().css("max-width", "919px");
 
@@ -195,7 +237,9 @@ document.addEventListener("keyup", (e) => {
   let targetElClasslist = targetEl.classList;
   if (targetEl.id === "userAmount") {
     let userAmt = parseFloat(targetEl.value);
-    let change = userAmt - orderItemsOrderAmount;
+    tenderedAmount = userAmt;
+    change = userAmt - orderItemsOrderAmount;
+
     document.querySelector(".userChange .userChangeAmount").innerHTML = `$${
       change ? change.toFixed(2) : "0.00"
     }`;
@@ -207,6 +251,27 @@ document.addEventListener("keyup", (e) => {
     }
   }
 });
+//reset the data
+const resetData = (response) => {
+  let jsonProducts = response.products;
+  let products = {};
+  orders = {};
+  jsonProducts.forEach((product) => {
+    products[product.id] = {
+      id: product.id,
+      product_name: product.product_name,
+      price: product.price,
+      img: product.img,
+      stock: product.stock,
+    };
+  });
+
+  orderItemsOrderAmount = 0.0;
+  totalAmount = 0.0;
+  change = 0.0;
+  tenderedAmount = 0.0;
+  updateOrderTable();
+};
 //add to order list
 const addToOrder = (productInfo, pid, quantity) => {
   //add to order list table

@@ -1,5 +1,5 @@
 <?php
-include ('utils/products.php');
+include ('Model/products.php');
 $products = getProducts();
 ?>
 <!DOCTYPE html>

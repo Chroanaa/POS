@@ -108,7 +108,32 @@ document.addEventListener("click", (e) => {
   }
   if (targetElClasslist.contains("checkoutBtn")) {
     let content = `<div class = "row">
-       <div class = "col-md-7"></div>
+       <div class = "col-md-7">
+       <div class = "row">
+       <div class = "col-md-2">#</div>
+       <div class = "col-md-4">PRODUCT</div>
+       <div class = "col-md-3">ORDERED</div>
+       <div class = "col-md-3">AMOUNT</div>
+       </div>
+       <div class = "row">
+       <div class = "col-md-2">1</div>
+       <div class = "col-md-4">Milo</div>
+       <div class = "col-md-3">3</div>
+       <div class = "col-md-3">$32.00</div>
+       </div>
+       <div class = "row">
+       <div class = "col-md-2">2</div>
+       <div class = "col-md-4">Nescafe</div>
+       <div class = "col-md-3">3</div>
+       <div class = "col-md-3">$32.00</div>
+       </div>
+       <div class = "row">
+       <div class = "col-md-2">3</div>
+       <div class = "col-md-4">Bearbrand</div>
+       <div class = "col-md-3">4</div>
+       <div class = "col-md-3">$32.00</div>
+       </div>
+       </div>
        <div class = "col-md-5">
          <div class = "checkoutTotalAmountContainer">
             <span class = "checkout_amt">$32.00</span></br>

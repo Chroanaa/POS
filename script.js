@@ -201,12 +201,13 @@ document.addEventListener("click", (e) => {
                 }
               ).done(
                 function (response) {
-                  function thereIsResponse() {
-                    if (response) {
-                      return true;
-                    }
-                  }
-                  let theresAResponse = thereIsResponse();
+                  let theresAResponse = response ? true : false;
+                  let id = response;
+                  let string = id.split(" ").join("");
+                  let order_id = string.split(":")[1];
+                  let order_id_string = order_id.split(",")[0];
+                  let order_id_int = JSON.parse(order_id_string);
+                  console.log(order_id_int);
                   BootstrapDialog.alert({
                     title: theresAResponse ? "Success" : "Error",
                     message: "Checkout Successful",
@@ -216,6 +217,11 @@ document.addEventListener("click", (e) => {
                     callback: function (result) {
                       if (theresAResponse) {
                         resetData(response);
+                        window.open(
+                          `receipt.php?sale_id=${order_id_int}`,
+                          "_blank"
+                        );
+                        window.location.reload();
                       }
                     },
                   });
@@ -257,10 +263,7 @@ document.addEventListener("keyup", (e) => {
 });
 //reset the data
 const resetData = (response) => {
-  console.log(response);
   orders = {};
-  window.location.reload();
-  updateOrderTable();
 
   orderItemsOrderAmount = 0.0;
   totalAmount = 0.0;

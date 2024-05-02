@@ -93,9 +93,9 @@ function saveProducts(){
       }
      
      echo json_encode([
+   'id' => $sales_id,
     'success' => true,
     'message' => "Checkout successful",
-    'products' => getProducts()  // Assuming getProducts() returns an array
     ]);
    }catch(PDOException $e){
     echo json_encode([

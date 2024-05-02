@@ -62,10 +62,11 @@ function saveProducts(){
 
     //insert the sold item
       foreach($data as $product_id => $orderItems){
-        $query = "INSERT INTO `salesitems`( `product_id`, `quantity`, `unit_price`, `sub_total`, `date_Created`, `updated_At`)
-         VALUES (:product_id,:quantity,:unit_price,:sub_total,:date_Created,:updated_At)";
+        $query = "INSERT INTO `salesitems`( `product_id`,sales_id, `quantity`, `unit_price`, `sub_total`, `date_Created`, `updated_At`)
+         VALUES (:product_id,:sales_id,:quantity,:unit_price,:sub_total,:date_Created,:updated_At)";
         $db_arr = [
            'product_id' => $product_id,
+            'sales_id'=>$sales_id,
             'quantity' => $orderItems['quantity'],
             'unit_price'=>$orderItems['price'],
             'sub_total'=>$orderItems['amount'],

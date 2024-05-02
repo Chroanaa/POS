@@ -19,4 +19,6 @@ try{
 }
 $GLOBALS['pos_conn'] = $pos_conn;
 $GLOBALS['conn'] = $conn;
+
+
 ?>

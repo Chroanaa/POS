@@ -186,7 +186,7 @@ document.addEventListener("click", (e) => {
               return a;
             } else {
               $.post(
-                "Model/products.php?action=checkout",
+                "Model/products.php?action=checkout", // URL
                 {
                   data: orders,
                   customer: {
@@ -198,25 +198,29 @@ document.addEventListener("click", (e) => {
                   total_Amount: orderItemsOrderAmount,
                   change_amount: change,
                   tendered_Amount: userAmt,
-                },
-
+                }
+              ).done(
                 function (response) {
-                  let type = response.success
-                    ? BootstrapDialog.TYPE_SUCCESS
-                    : BootstrapDialog.TYPE_DANGER;
-
+                  function thereIsResponse() {
+                    if (response) {
+                      return true;
+                    }
+                  }
+                  let theresAResponse = thereIsResponse();
                   BootstrapDialog.alert({
-                    type: type,
-                    title: response.success ? "Success" : "Error",
-                    message: response.message,
-                    callback: function (isOk) {
-                      if (response.success) {
+                    title: theresAResponse ? "Success" : "Error",
+                    message: "Checkout Successful",
+                    type: theresAResponse
+                      ? BootstrapDialog.TYPE_SUCCESS
+                      : BootstrapDialog.TYPE_DANGER,
+                    callback: function (result) {
+                      if (theresAResponse) {
                         resetData(response);
                       }
                     },
                   });
                 },
-                "json"
+                "json" // Expected DataType
               );
             }
           }
@@ -253,24 +257,15 @@ document.addEventListener("keyup", (e) => {
 });
 //reset the data
 const resetData = (response) => {
-  let jsonProducts = response.products;
-  let products = {};
+  console.log(response);
   orders = {};
-  jsonProducts.forEach((product) => {
-    products[product.id] = {
-      id: product.id,
-      product_name: product.product_name,
-      price: product.price,
-      img: product.img,
-      stock: product.stock,
-    };
-  });
+  window.location.reload();
+  updateOrderTable();
 
   orderItemsOrderAmount = 0.0;
   totalAmount = 0.0;
   change = 0.0;
   tenderedAmount = 0.0;
-  updateOrderTable();
 };
 //add to order list
 const addToOrder = (productInfo, pid, quantity) => {

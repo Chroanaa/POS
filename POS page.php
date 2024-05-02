@@ -42,6 +42,7 @@ $products = getProducts();
                                 <div class="col-md-4">
                                     <p class="productPrice">
                                         $<?= $product['price']?>
+                                       <span>Stock:   <?=$product['stock']?></span>
                                     </p>
                                 </div>
                             </div>

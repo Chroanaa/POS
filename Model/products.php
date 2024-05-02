@@ -21,9 +21,8 @@ getProducts();
 
 
 function saveProducts(){
-   try {
-    //code...
-     $conn = $GLOBALS['conn'];
+   try{
+      $conn = $GLOBALS['conn'];
     $pos_conn = $GLOBALS['pos_conn'];
     $data = $_POST['data'];
     $customer = $_POST['customer'];
@@ -91,18 +90,20 @@ function saveProducts(){
      $stmt = $inv_conn->prepare($query);
      $stmt->execute([$new_stock, date("Y-m-d H:i:s"),$product_id]);
       }
-       echo json_encode([
-        'success'=>true,
-        'message'=>"order successfully checkedout",
-        'products'=>getProducts()
+     
+     echo json_encode([
+    'success' => true,
+    'message' => "Checkout successful",
+    'products' => getProducts()  // Assuming getProducts() returns an array
+    ]);
+   }catch(PDOException $e){
+    echo json_encode([
+        header('Content-Type: application/json'),
+        'success'=> false,
+        'message'=> $e->getMessage()
+
     ]);
 
-   } catch (\Throwable $th) {
-    //throw $th;
-     echo json_encode([
-        'success'=>false,
-        'message'=>"Something went wrong with the checkout process"
-    ]);
    }
    
 

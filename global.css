@@ -274,3 +274,48 @@ body {
   text-transform: uppercase;
   padding: 20px;
 }
+/* dashboard CSS */
+.mainContainer {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #d0d0d0;
+}
+.widgetContainer {
+  text-align: center;
+  padding: 31px;
+  border: 1px solid #cfcfcf;
+  border-radius: 5px;
+  background: #81f981;
+}
+.widgetHeader {
+  font-size: 18px;
+}
+.widgetValue {
+  margin: 0px !important;
+  font-size: 35px;
+}
+.widgetQuantity {
+  background: #f9f681;
+}
+.widgetTotalOrder {
+  color: #fff;
+  background: #008069;
+}
+.chartContainer {
+  padding: 20px;
+  border: 1px solid #cfcfcf;
+}
+.chartTitle {
+  background: #f7f7f7; /*Gray*/
+  font-size: 20px;
+  text-align: center;
+}
+.widgetSecond {
+  padding: 20px;
+  border: 1px solid #cfcfcf;
+}
+.header {
+  background: #f7f7f7; /*Gray*/
+  font-size: 20px;
+  text-align: center;
+}

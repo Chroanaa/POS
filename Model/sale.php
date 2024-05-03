@@ -1,5 +1,5 @@
 <?php
-include ('Model/connection.php');
+include ('connection.php');
 function getSalesCustomer($customer_id){
     $conn = $GLOBALS['pos_conn'];
     $stmt = $conn->prepare("SELECT * FROM customer where id = $customer_id");

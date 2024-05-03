@@ -1,5 +1,5 @@
 <?php
-include ('Model/products.php');
+include ('../Model/products.php');
 $products = getProducts();
 
 ?>
@@ -13,7 +13,7 @@ $products = getProducts();
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
-    <link rel="stylesheet" href="global.css?v=<?= time()?>" type="text/css">
+    <link rel="stylesheet" href="../global.css?=time()?>" type="text/css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -119,7 +119,7 @@ $products = getProducts();
             $.ajax({
               type: "GET",
               data:{search_term:searchTerm},
-              url:"Model/live-search.php",
+              url:"../Model/live-search.php",
               success: function(response){
                  if(response.length === 0 ){
                     searchResult.innerHTML = '<p class ="nodata">No data found</p>';
@@ -205,7 +205,7 @@ $products = getProducts();
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/css/bootstrap-dialog.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+    <script src="../script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/js/bootstrap-dialog.min.js"></script>
 
 </html>

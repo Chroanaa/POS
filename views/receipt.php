@@ -1,5 +1,5 @@
 <?php
-include("Model/sale.php");
+include("../Model/sale.php");
 $sale_data = getSale($_GET['sale_id']);
 $customer_data = $sale_data['customer'];
 $items = $sale_data['items'];
@@ -17,7 +17,7 @@ $sale = $sale_data['sales'];
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
-    <link rel="stylesheet" href="global.css?v=<?= time()?>" type="text/css">
+    <link rel="stylesheet" href="../global.css?v=<?= time()?>" type="text/css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>

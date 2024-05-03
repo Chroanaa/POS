@@ -1,3 +1,8 @@
+<?php
+include("../Model/dashboardController.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +41,7 @@
         <div class="row mainContainer">
             <div class="col-md-5 widgetSecond">
                 <p class="header">LAST 5 ORDERS</p>
-                <table class="table"> 
+                <table class="table">  
                     <thead>
                       <tr>
                         <th>ORDER #</th>
@@ -105,12 +110,16 @@ const visualize = () => {
                 text: 'SALES REPORT'
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                accessability: {
+                    description: 'Date'
+                }
             },
             yAxis: {
                 title: {
                     text: 'Sales (in USD)'
-                }
+                },
+                
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.y:.1f} USD</b>'

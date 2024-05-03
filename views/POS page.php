@@ -1,5 +1,5 @@
 <?php
-include ('../Model/products.php');
+include ('../Model/productController.php');
 $products = getProducts();
 
 ?>
@@ -119,7 +119,7 @@ $products = getProducts();
             $.ajax({
               type: "GET",
               data:{search_term:searchTerm},
-              url:"../Model/live-search.php",
+              url:"../Model/searchController.php",
               success: function(response){
                  if(response.length === 0 ){
                     searchResult.innerHTML = '<p class ="nodata">No data found</p>';
@@ -134,7 +134,7 @@ $products = getProducts();
                         </div>
                         <div class="col-6">
                             <p class="searchResultProductName">
-                                ${product.product_name} ${product.id}
+                                ${product.product_name} 
                             </p>
                             <p class="searchResultProductPrice">
                                 $${product.price}

@@ -236,7 +236,7 @@ document.addEventListener("click", (e) => {
               return a;
             } else {
               $.post(
-                "../Model/products.php?action=checkout", // URL
+                "../Model/productController.php?action=checkout", // URL
                 {
                   data: orders,
                   customer: {

@@ -1,5 +1,5 @@
 <?php
-include("../Model/sale.php");
+include("../Model/saleController.php");
 $sale_data = getSale($_GET['sale_id']);
 $customer_data = $sale_data['customer'];
 $items = $sale_data['items'];

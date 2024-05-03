@@ -166,4 +166,10 @@ $sale = $sale_data['sales'];
         </div>
     </div>
 </body>
+<script>
+    window.print();
+    window.onafterprint = function(){
+        window.close();
+    }
+</script>
 </html>

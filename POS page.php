@@ -1,6 +1,7 @@
 <?php
 include ('Model/products.php');
 $products = getProducts();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +22,11 @@ $products = getProducts();
         <div class="row">
             <div class="col-8" >
                 <div class="searchInputContainer">
-                    <input type="text" class="searchInput" placeholder="Search Product" >
+                    <input type="text" class="searchInput" id ="searchInput" placeholder="Search Product" >
                 </div>
-                
+                <div class="searchResultContainerMain">
+                   
+                </div>
                 <div class="searchResultContainer">
                     <div class="row">
                         <!---- Product Result Container ---->
@@ -42,7 +45,7 @@ $products = getProducts();
                                 <div class="col-md-4">
                                     <p class="productPrice">
                                         $<?= $product['price']?>
-                                       <span>Stock:   <?=$product['stock']?></span>
+                                       <span>Stock:<?=$product['stock']?></span>
                                     </p>
                                 </div>
                             </div>
@@ -94,6 +97,108 @@ $products = getProducts();
             stock:product.stock
         };
     });
+    let typingTimer;
+    let doneTypingInterval = 500
+    document.addEventListener("keyup", (e)=>{
+        let el = e.target;
+        if(el.id === 'searchInput'){
+            let searchValue = el.value;
+            clearTimeout(typingTimer);
+            
+
+            typingTimer = setTimeout(()=>{
+                searchDbTerm(searchValue)
+            }, doneTypingInterval)
+        }
+    })
+
+    const searchDbTerm = (searchTerm) =>{
+        let searchResult = document.querySelector('.searchResultContainerMain');
+        if(searchTerm.length){
+            searchResult.style.display = 'block';
+            $.ajax({
+              type: "GET",
+              data:{search_term:searchTerm},
+              url:"Model/live-search.php",
+              success: function(response){
+                 if(response.length === 0 ){
+                    searchResult.innerHTML = '<p class ="nodata">No data found</p>';
+                 }
+                 else{
+                    let data = response.data;
+                    let html = '';
+                    data.forEach(product => {
+                        html += `<div class="row searchResultEntry" data-pid=${product['id']}>
+                        <div class="col-3">
+                            <img src="${product.img}" width="60%" alt="">
+                        </div>
+                        <div class="col-6">
+                            <p class="searchResultProductName">
+                                ${product.product_name} ${product.id}
+                            </p>
+                            <p class="searchResultProductPrice">
+                                $${product.price}
+                            </p>
+                        </div>                     
+                       </div>`
+                    });
+                    searchResult.innerHTML = html;
+                }
+                },
+                dataType: 'json'
+            }
+            
+        )
+        }else{
+            searchResult.style.display = 'none';
+        }
+    }
+    document.addEventListener("click", (e)=>{
+        //onclick function for the searchResultEntry
+        let targetEl = e.target;
+    let productID = targetEl.closest('.searchResultEntry');
+    if (productID) {
+        let pid = productID.dataset.pid;
+        console.log(pid);
+        const productInfo = products[pid];
+    const curStock = productInfo["stock"];
+    // if currrent stock is 0 throw an error
+    if (curStock === 0) {
+      dialogError("This product is out of stock");
+      return;
+    }
+
+    const dialogForm = `<h6 class = "dialogProductName"> ${productInfo["product_name"]}<span class = "dialogProductPrice">$${productInfo["price"]}</span></h6>
+    <input type="number" id="quantity" class ="form-control" placeholder="Enter Quantity" required min="1"/>
+    `;
+    BootstrapDialog.confirm({
+      title: "add to Cart",
+      backdrop: "static",
+      message: dialogForm,
+      callback: (addOrder) => {
+        if (addOrder) {
+          //check if quantity is not NULL
+          const quantity = parseInt(document.getElementById("quantity").value);
+          if (isNaN(quantity)) {
+            dialogError("Please enter a valid number");
+            return a;
+          }
+          //check if quantity is more than current stock
+          const curStock = productInfo["stock"];
+          if (quantity > curStock) {
+            dialogError(
+              `The quantity was more than the current stock of <strong style = "color:red;font-size:20px;">(${curStock})</strong>`
+            );
+            return a;
+          }
+          //ALL are CHECKED
+          addToOrder(productInfo,pid , quantity);
+          console.log(orders);
+        }
+      },
+    });
+    }
+    })
     
     </script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">

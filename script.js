@@ -75,6 +75,56 @@ document.addEventListener("click", (e) => {
   let pid = targetEl.dataset.id;
   let productInfo = orders[pid];
   let targetElClasslist = targetEl.classList;
+  let TargetElId = targetEl.id;
+  if (
+    targetElClasslist.contains("productImage") ||
+    targetElClasslist.contains("productName") ||
+    targetElClasslist.contains("productPrice")
+  ) {
+    //gets the id of the product
+
+    let productId = targetEl.closest("div.productColContainer");
+    console.log(targetEl.closest("searchResultEntry"));
+    let ContainerPID = productId.dataset.pid;
+    console.log(ContainerPID);
+    const productInfo = products[ContainerPID];
+    const curStock = productInfo["stock"];
+    // if currrent stock is 0 throw an error
+    if (curStock === 0) {
+      dialogError("This product is out of stock");
+      return;
+    }
+
+    const dialogForm = `<h6 class = "dialogProductName"> ${productInfo["product_name"]}<span class = "dialogProductPrice">$${productInfo["price"]}</span></h6>
+    <input type="number" id="quantity" class ="form-control" placeholder="Enter Quantity" required min="1"/>
+    `;
+    BootstrapDialog.confirm({
+      title: "add to Cart",
+      backdrop: "static",
+      message: dialogForm,
+      callback: (addOrder) => {
+        if (addOrder) {
+          //check if quantity is not NULL
+          const quantity = parseInt(document.getElementById("quantity").value);
+          if (isNaN(quantity)) {
+            dialogError("Please enter a valid number");
+            return a;
+          }
+          //check if quantity is more than current stock
+          const curStock = productInfo["stock"];
+          if (quantity > curStock) {
+            dialogError(
+              `The quantity was more than the current stock of <strong style = "color:red;font-size:20px;">(${curStock})</strong>`
+            );
+            return a;
+          }
+          //ALL are CHECKED
+          addToOrder(productInfo, ContainerPID, quantity);
+          console.log(orders);
+        }
+      },
+    });
+  }
   if (targetElClasslist.contains("quantityBtn_minus")) {
     //decrease quantity
     let orderQty = productInfo["quantity"];
@@ -216,7 +266,7 @@ document.addEventListener("click", (e) => {
                       : BootstrapDialog.TYPE_DANGER,
                     callback: function (result) {
                       if (theresAResponse) {
-                        resetData(response);
+                        resetData();
                         window.open(
                           `receipt.php?sale_id=${order_id_int}`,
                           "_blank"
@@ -245,6 +295,7 @@ document.addEventListener("click", (e) => {
 document.addEventListener("keyup", (e) => {
   let targetEl = e.target;
   let targetElClasslist = targetEl.classList;
+
   if (targetEl.id === "userAmount") {
     let userAmt = parseFloat(targetEl.value);
     tenderedAmount = userAmt;
@@ -262,7 +313,7 @@ document.addEventListener("keyup", (e) => {
   }
 });
 //reset the data
-const resetData = (response) => {
+const resetData = () => {
   orders = {};
 
   orderItemsOrderAmount = 0.0;
@@ -335,53 +386,3 @@ const getDate = setInterval(() => {
   textDate.innerHTML = FullDate;
 }, 1000);
 //listens for clicks in the products
-productContainer.addEventListener("click", (e) => {
-  const targetEl = e.target;
-  const targetElClasslist = targetEl.classList;
-  if (
-    targetElClasslist.contains("productImage") ||
-    targetElClasslist.contains("productName") ||
-    targetElClasslist.contains("productPrice")
-  ) {
-    //gets the id of the product
-    const productId = targetEl.closest("div.productColContainer");
-    const pid = productId.dataset.pid;
-    const productInfo = products[pid];
-    const curStock = productInfo["stock"];
-    // if currrent stock is 0 throw an error
-    if (curStock === 0) {
-      dialogError("This product is out of stock");
-      return;
-    }
-
-    const dialogForm = `<h6 class = "dialogProductName"> ${productInfo["product_name"]}<span class = "dialogProductPrice">$${productInfo["price"]}</span></h6>
-    <input type="number" id="quantity" class ="form-control" placeholder="Enter Quantity" required min="1"/>
-    `;
-    BootstrapDialog.confirm({
-      title: "add to Cart",
-      backdrop: "static",
-      message: dialogForm,
-      callback: (addOrder) => {
-        if (addOrder) {
-          //check if quantity is not NULL
-          const quantity = parseInt(document.getElementById("quantity").value);
-          if (isNaN(quantity)) {
-            dialogError("Please enter a valid number");
-            return a;
-          }
-          //check if quantity is more than current stock
-          const curStock = productInfo["stock"];
-          if (quantity > curStock) {
-            dialogError(
-              `The quantity was more than the current stock of <strong style = "color:red;font-size:20px;">(${curStock})</strong>`
-            );
-            return a;
-          }
-          //ALL are CHECKED
-          addToOrder(productInfo, pid, quantity);
-          console.log(orders);
-        }
-      },
-    });
-  }
-});

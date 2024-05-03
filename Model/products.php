@@ -1,4 +1,5 @@
 <?php 
+date_default_timezone_set('Asia/Manila');
 include ('connection.php'); 
 $action = isset($_GET['action']) ? $_GET['action'] :'';
 if ($action === 'checkout') {

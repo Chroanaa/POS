@@ -1,11 +1,12 @@
 <?php
 include("../Model/dashboardController.php");
-$widgetData = getWidgetData('2024-05-01', '2024-05-04');
+$widgetData = getWidgetData();
 $recentOrders = getRecentOrder();
 // default dates
 $end = date("Y-m-d");
 $start = date("Y-m-d",strtotime($end . "-7 days"));
 $graphData = getChartData($start, $end);
+$barData = getBarData($start, $end);
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +84,11 @@ $graphData = getChartData($start, $end);
                     <div id="container"></div>
                 </figure>
             </div>
-         
+         <div class="col-md-7">
+            <figure class = "highcharts-figure" style="text-align:right">
+                <div id="barChart"></div>
+            </figure>
+         </div>
         </div>
     </div>
 </body>
@@ -105,8 +110,8 @@ $graphData = getChartData($start, $end);
     const apiKey = "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";
     let chartData  = null
     let graphData = <?=$graphData?>;
-
-    const visualize = (graphData) => {
+    let barData = <?=$barData?>;
+    const splineChart = (graphData) => {
     const charts = Highcharts.chart('container', {
         chart: {
             type: 'spline'
@@ -158,11 +163,58 @@ const toDateRange = () => {
        let endF = end.format('YYYY-MM-DD');
        $('#daterange').html(`${moment(start).format('LL')} to ${moment(end).format('LL')}`);
        $.get(`../Model/dashboardController.php?action=getGraphData&start=${startF}&end=${endF}`, function(data){
-             visualize(data);
+             splineChart(data);
+             
        }, 'json');
     });
 }
-// const chatbot = () => {
+
+    const barChart = (Data) => {
+    const charts = Highcharts.chart('barChart', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'MOST BOUGHT PRODUCT'
+        },
+        xAxis: {
+            categories: Data.products,
+            accessibility: {
+                description: 'Product'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Quantity Sold'
+            },
+            
+        },
+        tooltip: {
+            pointFormat: '{series.name} of {point.category}: <b>{point.y}</b>'
+        },
+        plotOptions: {
+            spline: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: true
+            }
+        },
+        series: [{
+            name: 'Sales',
+            data: Data.quantity.map(Number)
+
+        }]
+    });
+    bar = charts.series[0].data.map((point, index) => {
+            return {
+                month: charts.xAxis[0].categories[index],
+                value: point.y
+            };
+        });
+};
+
+// const chatbot = (graphData) => {
 //     fetch("https://openrouter.ai/api/v1/chat/completions", {
 //         method: "POST",
 //         headers: {
@@ -172,16 +224,18 @@ const toDateRange = () => {
 //         body: JSON.stringify({
 //             "model": "openchat/openchat-7b:free",
 //             "messages": [
-//                 {"role": "user", "content": ` ${JSON.stringify(chartData)} Based on the chart, which month had the highest number? `}
+//                 {"role": "user", "content": ` ${JSON.stringify(graphData)} Based on the chart, which day of the May had the highest number? `}
 //             ],
 //         })
 //     })
 //     .then(response => response.json())
 //     .then(data => {console.log(data.choices[0].message.content)});
 // };
-
-visualize(graphData);
+// chatbot(graphData);
+splineChart(graphData);
+console.log(barData);
 toDateRange();
+barChart(barData);
 </script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">

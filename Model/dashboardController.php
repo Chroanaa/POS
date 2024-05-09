@@ -32,34 +32,74 @@ function getRecentOrder($limit = 5){
 }
 
 function getWidgetData(){
-    $date = date('Y-m-d');  
-    $sales = getSales($date, $date);
-    $qty = 0;
-    $orders = count($sales);
-    //for the sale Amount
-    $sales_amt = 0.00;
-    foreach($sales as $sale){
-        $orderItems = getOrderItems($sale['id']);
-        $sales_amt += $sale['total_amount'];
-        $qty += array_sum(array_column($orderItems, 'quantity'));
-    } 
-    $data = [
-        'sales_amt' => $sales_amt,
-        'qty' => $qty,
-        'orders' => $orders
-    ];
-    return $data;
+    $conn = $GLOBALS["pos_conn"];
 
+    $qty = 0;
+    $orders = 0;
+    $sales_amt = 0.00;   
+  $stmt = $conn->prepare("SELECT SUM(i.quantity) AS total_quantity, SUM(s.total_amount) AS total_amount, COUNT(s.id) AS total_sales_count
+                        FROM salesitems AS i
+                        JOIN sales AS s ON i.id = s.id;");
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$qty = $result['total_quantity'];
+$sales_amt = $result['total_amount'];
+$orders = $result['total_sales_count'];
+
+return [
+    'sales_amt' => $sales_amt,
+    'qty' => $qty,
+    'orders' => $orders
+];     
 }
-getWidgetData();
 function getSales($start, $end){
         $conn = $GLOBALS['pos_conn'];
-    $inv_conn = $GLOBALS['conn'];
     $stmt = $conn->prepare("SELECT * from sales where date_Created >=  '$start 00:00:00' AND date_Created <= '$end 23:59:59' ");
     $stmt->execute();
     $sales = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // get customer data
      return $sales;
-   
+  
 }
+function getBarData($start, $end){
+    $conn = $GLOBALS["pos_conn"];
+    $products = [];
+    $quantity = [];
+    $date = [];
+    $trends = [];
+   while($start < $end) {
+    $start = date('Y-m-d', strtotime($start . ' +1 day'));
+    $trends[$start] = getTrends($start, $start);
+  
+    foreach($trends as $trend){
+        foreach($trend as $item){
+            $products[] = $item['product_name'];
+            $quantity[] = $item['quantity'];
+            $date[] = $start;
+        }
+    }
+    $data = [
+        'products' => $products,
+        'quantity' => $quantity,
+        'date' => $date,
+
+    ];
+    return json_encode($data);
+   }
+                        
+}
+
+function getTrends($start, $end){
+    $conn = $GLOBALS["pos_conn"];
+    $stmt = $conn->prepare("SELECT p.product_name, SUM(s.quantity) AS quantity
+                            FROM salesitems s
+                            JOIN inventory.products p ON s.product_id = p.id
+                            WHERE s.date_Created >= '$start 00:00:00' AND s.date_Created <= '$end 23:59:59'
+                            GROUP BY p.product_name;
+");
+    $stmt->execute();
+    $sales = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $sales;
+    }
 ?>

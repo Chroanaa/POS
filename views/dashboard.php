@@ -84,7 +84,7 @@ $barData = getBarData($start, $end);
                     <div id="container"></div>
                 </figure>
             </div>
-         <div class="col-md-7">
+         <div class="col-md-11" style="display: flex; justify-content: center; align-items: center; width: 500px;">
             <figure class = "highcharts-figure" style="text-align:right">
                 <div id="barChart"></div>
             </figure>

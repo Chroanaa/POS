@@ -19,6 +19,10 @@ $barData = getBarData();
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,300">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.1.2/css/material-design-iconic-font.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400&family=Finger+Paint&display=swap">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../global.css ?=time()?>" type="text/css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -84,29 +88,22 @@ $barData = getBarData();
                 </div>
                 <figure class="highcharts-figure">
                     <div id="container"></div>
-                 <div class="chatBotContainer">
-                    <button class="chatbot" onclick="showModal()">Chat with Bot <i class = "bi bi-robot"></i></button>
-                    <div class="modal">
-                        <div class="modal-dialog ">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                     <div class="modal-body">
-                   <div class="messages">
-                    <div class="userInput"></div>
-                    <div class="botInput">Hello! I am your bot assistant!:<i class = "bi bi-robot"></i>Bot</div>
-                    </div>
-                    <div class="input-field">
-                     <form action="" class = "form">
-                        <input type="text" placeholder="Type a message...">
-                     <button type="submit" class = "send">Send</button>
-                     </form>
-                     </div>
-                  </div>
-                 </div>
-              </div>  
-               </div>
-                 
-                 </div>
+                
+<div id="chatModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="chatbox">
+      <!-- Chat messages will be appended here -->
+    </div>
+    <form id="chatForm">
+      <input id="userInput" type="text" placeholder="Type your message...">
+      <button type="submit">Send</button>
+      <button type="button" class="clear">clear</button>
+    </form>
+  </div>
+</div>
+<button onclick="showModal()">Open chatbot</button>
+                   
                 </figure>
             </div>
         <div  style="display: flex; justify-content: center; align-items: center; width: 2000px;  margin-right:100px;">
@@ -136,8 +133,10 @@ $barData = getBarData();
     const modal = document.querySelector(".modal");
     const close = document.querySelector(".close");
     const send = document.querySelector(".send");
-    const form = document.querySelector("form");
-    const messages = document.querySelector(".messages");
+    const form = document.querySelector("#chatForm");
+    const chatbox = document.querySelector("#chatbox");
+    const input = document.querySelector("#userInput");
+    const clear = document.querySelector(".clear");
     const currentDate = () => {
          let date = new Date();
   let time = date.toLocaleTimeString();
@@ -277,23 +276,38 @@ const chatbot = async (input) => {
 
 const showModal = () =>{
    modal.style.display = "flex";
+   input.focus();
 }
 close.onclick = () => {
     modal.style.display = "none";
 }
 form.onsubmit = async (e) => {
     e.preventDefault();
-    const userInput = document.querySelector(".input-field input").value;
-    const userDiv = document.createElement('div');
-    userDiv.className = 'userInput';
-    userDiv.innerHTML = `<b>User: </b>${userInput}`;
-    messages.appendChild(userDiv);
-    const response = await chatbot(userInput);
-    const botDiv = document.createElement('div');
-    botDiv.className = 'botInput';
-    botDiv.innerHTML = `${response ? response : "Typing...."}<i class = "bi bi-robot"></i>: <b>Bot</b>`;
-    messages.appendChild(botDiv);
-    userInput.value = "";
+    const timestamp = new Date().toLocaleTimeString();
+    chatbox.innerHTML += `
+    <div class="message userMessage">
+      <div class="user">${input.value}</div>
+      <p class="userTag">User: <span class="timestamp">${timestamp}</span></p>
+    </div>`;
+
+    chatbox.innerHTML += `
+    <div class="message botMessage">
+        <div class="bot typing">Typing...</div>
+        <p class="botTag">:Bot <span class="timestamp">${new Date().toLocaleTimeString()}</span></p>
+    </div>`;
+    
+    const response = await chatbot(input.value);
+    const formattedResponse = response.replace(/\n/g, '<br>');
+    
+    const typingElement = document.querySelector('.typing');
+    typingElement.innerHTML = formattedResponse;
+    typingElement.classList.remove('typing');
+    
+    input.value = "";
+   
+}
+clear.onclick = () => {
+    chatbox.innerHTML = "";
 }
 splineChart(graphData);
 toDateRange();

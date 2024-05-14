@@ -319,142 +319,119 @@ body {
   font-size: 20px;
   text-align: center;
 }
+
+/* CSS */
 .modal {
   display: none;
   position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 800px; /* Increased width */
-  height: 800px; /* Increased height */
-  overflow: hidden;
-  padding: 20px;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-  overflow: hidden;
+  background-color: #fefefe;
+  margin: auto;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  border: 1px solid #888;
+  width: 80%;
 }
-.modal-body {
-  overflow: hidden;
-}
-.modal-dialog {
-  overflow: hidden;
-}
+
 .close {
-  align-self: flex-end;
-  margin-bottom: 20px;
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
 }
 
-.userInput,
-.botInput {
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#chatbox {
+  height: 300px;
+  overflow-y: scroll;
+}
+
+#chatbox .user,
+#chatbox .bot {
+  clear: both;
   padding: 10px;
-  margin: 10px;
-  border-radius: 10px;
-  width: fit-content;
+  border-radius: 20px;
+  margin-bottom: 10px;
 }
 
-.userInput b,
-.botInput b {
-  order: 1;
-}
-
-.userInput span,
-.botInput span {
-  order: 2;
-}
-.userInput {
-  background-color: #ff8ca1; /* Lighter version of #ff5c85 */
-
-  order: 1;
-}
-
-.botInput {
-  background-color: #85b3d1; /* Darker shade of light blue */
-  align-self: flex-start;
-  order: 2;
-}
-
-.messages {
-  display: flex;
-  flex-direction: column;
-  max-height: 600px;
-  overflow-y: auto;
-}
-
-.input-field {
-  position: sticky;
-  bottom: 0;
-  display: flex;
-  border-top: 1px solid #ccc;
-  margin-top: 340px;
-  padding: 10px 0;
-}
-.botInput .bi-robot {
-  color: #ff5c85;
-}
-.input-field input {
-  flex-grow: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-.input-field button {
-  padding: 10px;
-  border: none;
-  background-color: #4caf50;
+#chatbox .user {
+  max-width: 50%;
+  background-color: #007bff;
   color: white;
-  border-radius: 5px;
+  float: left;
 }
-.botInput {
-  text-align: right; /* Aligns text to the right */
-  /* OR */
-  margin-left: auto; /* Pushes block-level element to the right */
+
+#chatbox .bot {
+  max-width: 50%;
+  background-color: #e0e0e0;
+  float: right;
 }
-.form {
+#chatForm {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.form input[type="text"] {
-  width: 300px; /* Adjust as needed */
+#userInput {
+  flex-grow: 1;
+  margin-right: 10px;
   padding: 10px;
-  font-size: 16px; /* Adjust as needed */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.message {
+  margin-bottom: 10px;
 }
 
-.form button {
-  margin-left: 10px;
-  padding: 10px;
-  font-size: 16px; /* Adjust as needed */
+.label {
+  font-weight: bold;
+  margin-right: 5px;
 }
-.chatbot {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 16px;
-}
-.bi-robot {
-  font-size: 17px;
-  color: #ff5c85;
+.message {
+  margin-bottom: 10px;
 }
 
-.chatbot {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 16px;
-  border: none;
-  padding: 10px;
-  color: #ffffff;
-  border-radius: 10px;
-  background-color: #ff5c85;
+.userTag,
+.botTag {
+  font-size: larger;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
-.bi-robot {
-  font-size: 20px;
-  color: #ffffff;
+.botTag {
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: right;
+}
+.userMessage,
+.botMessage {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
 }
 
-.chatbot:hover {
-  background-color: #ff8ca1;
+.botMessage {
+  align-items: flex-end;
+}
+.bot ol {
+  padding-left: 20px;
+}
+.timestamp {
+  font-size: 0.8em;
+  color: #888;
 }

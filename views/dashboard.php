@@ -6,7 +6,7 @@ $recentOrders = getRecentOrder();
 $end = date("Y-m-d");
 $start = date("Y-m-d",strtotime($end . "-7 days"));
 $graphData = getChartData($start, $end);
-$barData = getBarData($start, $end);
+$barData = getBarData();
 ?>
 
 <!DOCTYPE html>
@@ -19,8 +19,10 @@ $barData = getBarData($start, $end);
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../global.css ?=time()?>" type="text/css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-fluid">
@@ -82,13 +84,36 @@ $barData = getBarData($start, $end);
                 </div>
                 <figure class="highcharts-figure">
                     <div id="container"></div>
+                 <div class="chatBotContainer">
+                    <button class="chatbot" onclick="showModal()">Chat with Bot <i class = "bi bi-robot"></i></button>
+                    <div class="modal">
+                        <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                     <div class="modal-body">
+                   <div class="messages">
+                    <div class="userInput"></div>
+                    <div class="botInput">Hello! I am your bot assistant!:<i class = "bi bi-robot"></i>Bot</div>
+                    </div>
+                    <div class="input-field">
+                     <form action="" class = "form">
+                        <input type="text" placeholder="Type a message...">
+                     <button type="submit" class = "send">Send</button>
+                     </form>
+                     </div>
+                  </div>
+                 </div>
+              </div>  
+               </div>
+                 
+                 </div>
                 </figure>
             </div>
-         <div class="col-md-11" style="display: flex; justify-content: center; align-items: center; width: 500px;">
-            <figure class = "highcharts-figure" style="text-align:right">
-                <div id="barChart"></div>
+        <div  style="display: flex; justify-content: center; align-items: center; width: 2000px;  margin-right:100px;">
+            <figure class="highcharts-figure" style="text-align:right; width: 100%; ">
+                <div id="barChart" style="width: 100%;"></div>
             </figure>
-         </div>
+        </div>
         </div>
     </div>
 </body>
@@ -107,7 +132,23 @@ $barData = getBarData($start, $end);
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script>
-    const apiKey = "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";
+    const apiKey = "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";
+    const modal = document.querySelector(".modal");
+    const close = document.querySelector(".close");
+    const send = document.querySelector(".send");
+    const form = document.querySelector("form");
+    const messages = document.querySelector(".messages");
+    const currentDate = () => {
+         let date = new Date();
+  let time = date.toLocaleTimeString();
+  let monthYearDay = date.toLocaleDateString("default", {
+    month: "long",
+    year: "numeric",
+    day: "numeric",
+  });
+  let FullDate = ` ${time}`;
+  return FullDate;
+    }
     let chartData  = null
     let graphData = <?=$graphData?>;
     let barData = <?=$barData?>;
@@ -205,6 +246,7 @@ const toDateRange = () => {
             data: Data.quantity.map(Number)
 
         }]
+    
     });
     bar = charts.series[0].data.map((point, index) => {
             return {
@@ -214,32 +256,53 @@ const toDateRange = () => {
         });
 };
 
-// const chatbot = (graphData) => {
-//     fetch("https://openrouter.ai/api/v1/chat/completions", {
-//         method: "POST",
-//         headers: {
-//             "Authorization": `Bearer ${apiKey}`,
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({
-//             "model": "openchat/openchat-7b:free",
-//             "messages": [
-//                 {"role": "user", "content": ` ${JSON.stringify(graphData)} Based on the chart, which day of the May had the highest number? `}
-//             ],
-//         })
-//     })
-//     .then(response => response.json())
-//     .then(data => {console.log(data.choices[0].message.content)});
-// };
-// chatbot(graphData);
+const chatbot = async (input) => {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${apiKey}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "model": "google/gemma-7b-it:free",
+            "messages": [
+                {"role": "user", "content": input}
+            ],
+        })
+    });
+
+    const data = await response.json();
+    return data.choices[0].message.content;
+}
+
+const showModal = () =>{
+   modal.style.display = "flex";
+}
+close.onclick = () => {
+    modal.style.display = "none";
+}
+form.onsubmit = async (e) => {
+    e.preventDefault();
+    const userInput = document.querySelector(".input-field input").value;
+    const userDiv = document.createElement('div');
+    userDiv.className = 'userInput';
+    userDiv.innerHTML = `<b>User: </b>${userInput}`;
+    messages.appendChild(userDiv);
+    const response = await chatbot(userInput);
+    const botDiv = document.createElement('div');
+    botDiv.className = 'botInput';
+    botDiv.innerHTML = `${response ? response : "Typing...."}<i class = "bi bi-robot"></i>: <b>Bot</b>`;
+    messages.appendChild(botDiv);
+    userInput.value = "";
+}
 splineChart(graphData);
-console.log(barData);
 toDateRange();
 barChart(barData);
 </script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/css/bootstrap-dialog.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.5/js/bootstrap-dialog.min.js"></script>

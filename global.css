@@ -319,3 +319,142 @@ body {
   font-size: 20px;
   text-align: center;
 }
+.modal {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 800px; /* Increased width */
+  height: 800px; /* Increased height */
+  overflow: hidden;
+  padding: 20px;
+}
+
+.modal-content {
+  overflow: hidden;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.modal-body {
+  overflow: hidden;
+}
+.modal-dialog {
+  overflow: hidden;
+}
+.close {
+  align-self: flex-end;
+  margin-bottom: 20px;
+}
+
+.userInput,
+.botInput {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  width: fit-content;
+}
+
+.userInput b,
+.botInput b {
+  order: 1;
+}
+
+.userInput span,
+.botInput span {
+  order: 2;
+}
+.userInput {
+  background-color: #ff8ca1; /* Lighter version of #ff5c85 */
+
+  order: 1;
+}
+
+.botInput {
+  background-color: #85b3d1; /* Darker shade of light blue */
+  align-self: flex-start;
+  order: 2;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.input-field {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  border-top: 1px solid #ccc;
+  margin-top: 340px;
+  padding: 10px 0;
+}
+.botInput .bi-robot {
+  color: #ff5c85;
+}
+.input-field input {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.input-field button {
+  padding: 10px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 5px;
+}
+.botInput {
+  text-align: right; /* Aligns text to the right */
+  /* OR */
+  margin-left: auto; /* Pushes block-level element to the right */
+}
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form input[type="text"] {
+  width: 300px; /* Adjust as needed */
+  padding: 10px;
+  font-size: 16px; /* Adjust as needed */
+}
+
+.form button {
+  margin-left: 10px;
+  padding: 10px;
+  font-size: 16px; /* Adjust as needed */
+}
+.chatbot {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+}
+.bi-robot {
+  font-size: 17px;
+  color: #ff5c85;
+}
+
+.chatbot {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  border: none;
+  padding: 10px;
+  color: #ffffff;
+  border-radius: 10px;
+  background-color: #ff5c85;
+}
+.bi-robot {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.chatbot:hover {
+  background-color: #ff8ca1;
+}

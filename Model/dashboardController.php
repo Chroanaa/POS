@@ -62,40 +62,36 @@ function getSales($start, $end){
      return $sales;
   
 }
-function getBarData($start, $end){
+function getBarData(){
     $conn = $GLOBALS["pos_conn"];
     $products = [];
     $quantity = [];
     $date = [];
     $trends = [];
-   while($start < $end) {
-    $start = date('Y-m-d', strtotime($start . ' +1 day'));
-    $trends[$start] = getTrends($start, $start);
+   
+    $trends[] = getTrends();
   
     foreach($trends as $trend){
         foreach($trend as $item){
             $products[] = $item['product_name'];
             $quantity[] = $item['quantity'];
-            $date[] = $start;
         }
     }
     $data = [
         'products' => $products,
         'quantity' => $quantity,
-        'date' => $date,
 
     ];
     return json_encode($data);
    }
                         
-}
 
-function getTrends($start, $end){
+
+function getTrends(){
     $conn = $GLOBALS["pos_conn"];
     $stmt = $conn->prepare("SELECT p.product_name, SUM(s.quantity) AS quantity
                             FROM salesitems s
                             JOIN inventory.products p ON s.product_id = p.id
-                            WHERE s.date_Created >= '$start 00:00:00' AND s.date_Created <= '$end 23:59:59'
                             GROUP BY p.product_name;
 ");
     $stmt->execute();

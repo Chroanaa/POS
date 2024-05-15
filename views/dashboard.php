@@ -279,7 +279,8 @@ const showModal = () =>{
    input.focus();
 }
 close.onclick = () => {
-    modal.style.display = "none";
+    const modalContent = document.querySelector('.modal-content');
+  modalContent.style.animation = '1s cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 slideOutToRight forwards';
 }
 form.onsubmit = async (e) => {
     e.preventDefault();
@@ -292,16 +293,16 @@ form.onsubmit = async (e) => {
 
     chatbox.innerHTML += `
     <div class="message botMessage">
-        <div class="bot typing">Typing...</div>
+        <div class="bot typing">${input.value}</div>
         <p class="botTag">:Bot <span class="timestamp">${new Date().toLocaleTimeString()}</span></p>
     </div>`;
     
-    const response = await chatbot(input.value);
-    const formattedResponse = response.replace(/\n/g, '<br>');
+    // const response = await chatbot(input.value);
+    // const formattedResponse = response.replace(/\n/g, '<br>');
     
-    const typingElement = document.querySelector('.typing');
-    typingElement.innerHTML = formattedResponse;
-    typingElement.classList.remove('typing');
+    // const typingElement = document.querySelector('.typing');
+    // typingElement.innerHTML = input.value;
+    // typingElement.classList.remove('typing');
     
     input.value = "";
    
@@ -309,6 +310,7 @@ form.onsubmit = async (e) => {
 clear.onclick = () => {
     chatbox.innerHTML = "";
 }
+
 splineChart(graphData);
 toDateRange();
 barChart(barData);

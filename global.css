@@ -337,13 +337,13 @@ body {
     opacity: 0;
   }
   100% {
-    transform: translateX(45%);
+    transform: translateX(50%);
     opacity: 1;
   }
 }
 @keyframes slideOutToRight {
   0% {
-    transform: translateX(45%);
+    transform: translateX(50%);
     opacity: 1;
   }
   100% {
@@ -359,15 +359,42 @@ body {
   right: 0;
   width: 50%;
   height: 100%;
-  transform: translate(45%);
+  transform: translate(50%);
   animation: 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 slideInFromRight;
   will-change: transform, opacity;
+}
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  margin-bottom: 20px;
 }
 .close {
   color: #aaaaaa;
   float: right;
-  font-size: 28px;
+  font-size: 40px;
   font-weight: bold;
+}
+.send {
+  width: 60px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+.clear {
+  border: none;
+  border-radius: 10px;
+  width: 60px;
+  background: #e72929;
+  color: white;
+}
+.clear:hover {
+  background: #ff0000;
+}
+.send:hover {
+  background: #0056b3;
 }
 
 .close:hover,
@@ -376,9 +403,11 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
-
+.modal-content .bi-robot {
+  font-size: 30px;
+}
 #chatbox {
-  height: 500px;
+  height: 800px;
   overflow-y: scroll;
 }
 
@@ -454,4 +483,34 @@ body {
 .timestamp {
   font-size: 0.8em;
   color: #888;
+}
+.openChatButton {
+  position: fixed;
+  margin-top: 10px;
+  border-radius: 10px;
+  top: 0;
+  right: 0;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  width: 100px;
+  height: 50px;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.openChatButton:hover {
+  background-color: #0056b3;
+}
+.openChatButton .bi-caret-right-fill {
+  margin-left: 20px;
+  vertical-align: middle;
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.openChatButton:hover .bi-caret-right-fill {
+  transform: rotate(360deg);
 }

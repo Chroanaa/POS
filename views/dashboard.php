@@ -91,18 +91,22 @@ $barData = getBarData();
                 
 <div id="chatModal" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <div class="modal-header">
+<i class = "bi bi-robot"></i>
+    
+<span class="close" style = "font-size: 50px; ">&times; </span>
+</div>
     <div id="chatbox">
       <!-- Chat messages will be appended here -->
     </div>
     <form id="chatForm">
       <input id="userInput" type="text" placeholder="Type your message...">
-      <button type="submit">Send</button>
-      <button type="button" class="clear">clear</button>
+      <button type="submit" class = "send"><i class="bi bi-send-fill"></i></button>
+      <button type="button" class="clear"><i class="bi bi-trash-fill"></i></button>
     </form>
   </div>
 </div>
-<button onclick="showModal()">Open chatbot</button>
+<button onclick="showModal()" class = "openChatButton" draggable="true"><i class = "bi bi-robot"></i><i class="bi bi-caret-right-fill" ></i></button>
                    
                 </figure>
             </div>
@@ -137,6 +141,7 @@ $barData = getBarData();
     const chatbox = document.querySelector("#chatbox");
     const input = document.querySelector("#userInput");
     const clear = document.querySelector(".clear");
+    const openChatButton = document.querySelector(".openChatButton");
     const currentDate = () => {
          let date = new Date();
   let time = date.toLocaleTimeString();
@@ -277,11 +282,29 @@ const chatbot = async (input) => {
 const showModal = () =>{
    modal.style.display = "flex";
    input.focus();
+   chatbox.innerHTML += `
+    <div class="message botMessage">
+        <div class="bot">Hello! How can I help you today?</div>
+        <p class="botTag">:Bot <span class="timestamp">${currentDate()}</span></p>
+    </div>`;
+   setTimeout(() => {
+    openChatButton.style.display = 'none';
+   }, 1000);
 }
 close.onclick = () => {
     const modalContent = document.querySelector('.modal-content');
   modalContent.style.animation = '1s cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 slideOutToRight forwards';
+  openChatButton.style.display = 'block';
+  if (modalContent.style.animation = '1s cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 slideOutToRight forwards') {
+    setTimeout(() => {
+      modal.style.display = 'none';
+      modalContent.style.animation = '';
+      openChatButton.style.display = 'block';
+      chatbox.innerHTML = '';
+    }, 1000);
+  }
 }
+
 form.onsubmit = async (e) => {
     e.preventDefault();
     const timestamp = new Date().toLocaleTimeString();
@@ -293,19 +316,16 @@ form.onsubmit = async (e) => {
 
     chatbox.innerHTML += `
     <div class="message botMessage">
-        <div class="bot typing">${input.value}</div>
+        <div class="bot typing">typing....</div>
         <p class="botTag">:Bot <span class="timestamp">${new Date().toLocaleTimeString()}</span></p>
     </div>`;
-    
-    // const response = await chatbot(input.value);
-    // const formattedResponse = response.replace(/\n/g, '<br>');
-    
-    // const typingElement = document.querySelector('.typing');
-    // typingElement.innerHTML = input.value;
-    // typingElement.classList.remove('typing');
+    const response = await chatbot(input.value);
+    const formattedResponse = response.replace(/\n/g, '<br>');
+    const typingElement = document.querySelector('.typing');
+    typingElement.innerHTML = formattedResponse;
+    typingElement.classList.remove('typing');
     
     input.value = "";
-   
 }
 clear.onclick = () => {
     chatbox.innerHTML = "";

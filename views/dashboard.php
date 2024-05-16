@@ -29,6 +29,7 @@ $barData = getBarData();
    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
+    <a href="POS page.php" style = "font-size:20px; text-decoration:underline">Go to POS</a>
     <div class="container-fluid">
         <div class="row mainContainer">
             <div class="col-4">

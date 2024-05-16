@@ -61,8 +61,8 @@ $products = getProducts();
     </div>
     <div class="col-4 posOrderContainer" >
         <div class="pos_header" >
-            <div class="setting alignRight" style="text-align: right !important;">
-                <a href="javascript:void(0);"><i class="fa fa-gear"></i></a>
+            <div class=" alignRight" style="text-align: right !important; ">
+            <a href="dashboard.php " class = "linkToDashBoard" style = "font-size:15px">Go to Dashboard <i class="bi bi-arrow-right-square-fill"></i></a>
             </div>
             <p class="logo">IMS</p>
             <p class="timeAndDate"></p>
